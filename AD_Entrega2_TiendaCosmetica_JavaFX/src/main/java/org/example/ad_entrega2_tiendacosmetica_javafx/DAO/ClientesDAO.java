@@ -47,7 +47,7 @@ public class ClientesDAO {
         //utilizo un bloque try-with-resources para asegurar que los recursos se cierren correctamente al finalizar
         try (Connection connection = conexionBBDD.conectar();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            System.out.println(emailCliente);
+
             //establezco los parámetros de la consulta
             statement.setString(1, nombreCliente);
             statement.setString(2, emailCliente);

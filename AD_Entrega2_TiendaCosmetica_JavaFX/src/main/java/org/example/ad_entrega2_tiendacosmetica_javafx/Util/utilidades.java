@@ -31,7 +31,7 @@ public class utilidades {
             Stage stage = (Stage) boton.getScene().getWindow(); // Obtén la ventana (Stage) desde el botón
             stage.setScene(scene); // Establece la nueva escena en la ventana actual
         } catch (Exception e) {
-            System.out.println("Error al cambiar la escena: " + e.getMessage());
+            System.out.println("Error al cambiar la escena." + e.getMessage());
         }//catch
     }//cambiarEscena
 

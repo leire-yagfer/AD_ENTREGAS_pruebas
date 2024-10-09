@@ -41,8 +41,38 @@ public class ComprasController implements Initializable {
     double precioCrema = 20.67;
     double precioLabial = 9.49;
     double precioSerum = 17.99;
+    double precioTotal;
+
+
 
     //MÉTODOS
+    //MÉTODO QUE SE EJECUTA CUANDO SE CARGA EL FXML
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObservableList<Integer> cantidades = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10); //creo una lista de números del 1 al 10
+        cantidadCB.setItems(cantidades); //asigno la lista al ComboBox
+        cantidadCB.setValue(1); ////establecer un valor predeterminado, el 1
+    }//initialize
+
+
+
+    public double cantidadComprada(){ //este método no puede ser static porque utiliza variables de esta clase
+        //obtengo la cantidad de productos que se quieren comprar
+        int cantidadAComprar = cantidadCB.getValue();
+        if(cremaRB.isSelected()){
+            precioTotal = cantidadAComprar * precioCrema;
+        }
+        else if(labialRB.isSelected()){
+            precioTotal = cantidadAComprar * precioLabial;
+        }
+        else if(serumRB.isSelected()){
+            precioTotal = cantidadAComprar * precioSerum;
+        }
+        return precioTotal;
+    }//cantidadComprada
+
+
+
     @FXML
     void onComprarClick(ActionEvent event) {
         utilidades.cambiarEscena(botonComprar, "Ticket.fxml");
@@ -54,14 +84,4 @@ public class ComprasController implements Initializable {
     void onAtrasClick(ActionEvent event) {
         utilidades.cambiarEscena(botonAtras, "Principal.fxml");
     }//onAtrasClick
-
-
-
-    //MÉTODO QUE SE EJECUTA CUANDO SE CARGA EL FXML
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<Integer> cantidades = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10); //creo una lista de números del 1 al 10
-        cantidadCB.setItems(cantidades); //asigno la lista al ComboBox
-        cantidadCB.setValue(1); ////establecer un valor predeterminado, el 1
-    }//initialize
 }//class
