@@ -4,13 +4,13 @@ public class Clientes {
 
     //ATRIBUTOS
     private int idCliente;
-    private String nombreCliente;
+    private String nombreUsuario;
     private String email;
 
 
     //CONSTRUCTOR --> sin id porque es auto-increment
-    public Clientes(String nombreCliente, String email) {
-        this.nombreCliente = nombreCliente;
+    public Clientes(String nombreUsuario, String email) {
+        this.nombreUsuario = nombreUsuario;
         this.email = email;
     }
 
@@ -24,12 +24,12 @@ public class Clientes {
         this.idCliente = idCliente;
     }
 
-    public String getNombreCliente() {
-        return nombreCliente;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getEmail() {

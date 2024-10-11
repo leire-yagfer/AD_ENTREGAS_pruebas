@@ -6,18 +6,17 @@ public class Ventas {
 
     //ATRIBUTOS
     private int idVenta;
-    private int idCliente;
-    private int idProducto;
+    private String nombreUsuarioCliente;
+    private String nombreProducto;
     private LocalDateTime fecha_venta; //fecha con hora
     private int cantidad;
     private double total;
 
 
     //CONSTRUCTOR
-    public Ventas(int idVenta, int idCliente, int idProducto, LocalDateTime fecha_venta, int cantidad, double total) {
-        this.idVenta = idVenta;
-        this.idCliente = idCliente;
-        this.idProducto = idProducto;
+    public Ventas(String nombreUsuarioCliente, String idProducto, LocalDateTime fecha_venta, int cantidad, double total) {
+        this.nombreUsuarioCliente = nombreUsuarioCliente;
+        this.nombreProducto = idProducto;
         this.fecha_venta = fecha_venta;
         this.cantidad = cantidad;
         this.total = total;
@@ -33,20 +32,20 @@ public class Ventas {
         this.idVenta = idVenta;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public String getNombreUsuarioCliente() {
+        return nombreUsuarioCliente;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setNombreUsuarioCliente(String nombreUsuarioCliente) {
+        this.nombreUsuarioCliente = nombreUsuarioCliente;
     }
 
-    public int getIdProducto() {
-        return idProducto;
+    public String getNombreProducto() {
+        return nombreProducto;
     }
 
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
     }
 
     public LocalDateTime getFecha_venta() {

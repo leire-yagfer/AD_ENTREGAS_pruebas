@@ -5,17 +5,13 @@ public class Productos {
     //ATRIBUTOS
     private int idProducto;
     private String nombreProducto;
-    private String categoria;
     private double precio;
-    private int stock;
 
 
     //CONSTRUCTOR --> sin id porque es auto-increment
-    public Productos(String nombreProducto, String categoria, double precio, int stock) {
+    public Productos(String nombreProducto, double precio) {
         this.nombreProducto = nombreProducto;
-        this.categoria = categoria;
         this.precio = precio;
-        this.stock = stock;
     }
 
 
@@ -36,14 +32,6 @@ public class Productos {
         this.nombreProducto = nombreProducto;
     }
 
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
     public double getPrecio() {
         return precio;
     }
@@ -51,15 +39,4 @@ public class Productos {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-
-    //TOSTRING para
 }//class
