@@ -10,7 +10,7 @@ import org.example.ad_entrega2_tiendacosmetica_javafx.Util.utilidades;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TicketController implements Initializable {
+public class TicketController{
 
     //ATRIBUTOS
     @FXML
@@ -23,15 +23,16 @@ public class TicketController implements Initializable {
     private TextArea resumenCompra;
 
     //creo un objeto de la clase ComprasController porque necesito un método de esa clase, el cual no es static
-    ComprasController comprasController;
+
 
 
     //MÉTODOS
     //método que según se abre la pestaña muestra la compra
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        double precioCompra = comprasController.cantidadComprada();
-        resumenCompra.setText(String.valueOf(precioCompra)); //en el textArea no puedo poner un texto con valor double, sino que tiene que ser String, por lo que lo "casteo"
+    public void mostrarTicket(ComprasController comprasController) {
+        resumenCompra.setText("Ticket de compra \n"
+                + comprasController.devolverNombreYCantidadProducto()
+                + "\nPrecio total.................."
+                + comprasController.cantidadComprada() + "€");
     }//initialize
 
 

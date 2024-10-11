@@ -25,7 +25,7 @@ public class utilidades {
     // Función para cambiar la escena a un nuevo FXML
     public static void cambiarEscena(Button boton, String fxmlFile) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxmlFile)); // Verifica la ruta correcta de Compras.fxml
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(fxmlFile)); // Verifica la ruta correcta de Compras.fxml --> obtengo un controlador
             Parent root = fxmlLoader.load(); // Carga el archivo FXML
             Scene scene = new Scene(root); // Crea una nueva escena con el archivo FXML cargado
             Stage stage = (Stage) boton.getScene().getWindow(); // Obtén la ventana (Stage) desde el botón

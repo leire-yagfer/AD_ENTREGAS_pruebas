@@ -59,4 +59,7 @@ public class Productos {
     public void setStock(int stock) {
         this.stock = stock;
     }
+
+
+    //TOSTRING para
 }//class

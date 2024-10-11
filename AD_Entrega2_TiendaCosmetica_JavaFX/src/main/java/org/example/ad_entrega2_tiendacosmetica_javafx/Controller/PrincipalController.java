@@ -26,6 +26,9 @@ public class PrincipalController {
     @FXML
     private TextField nombreTF;
 
+
+    //MÉTODOS
+    //método que cuando ya estoy registrado e introduzco las credenciales correctamente se pasa a la otra pantalla
     @FXML
     void onEntrarClick(ActionEvent event) {
         String nombre = nombreTF.getText();
@@ -42,7 +45,7 @@ public class PrincipalController {
             //SI SE CUMPLE, PASo A LA OTRA VENTANA
             utilidades.cambiarEscena(botonEntrar, "Compras.fxml");
         } else {
-            // si las credenciales no son correctas, muestro un mensaje de error
+            //si las credenciales no son correctas, muestro un mensaje de error
             utilidades.mostrarAlerta("Nombre de usuario o email incorrectos. Inténtelo de nuevo", Alert.AlertType.ERROR);
         }
 
@@ -62,6 +65,7 @@ public class PrincipalController {
         //compruebo QUE TODOS LOS CAMPOS ESTÉN RELLENOS
         if (nombre.isEmpty() || email.isEmpty()) {
             utilidades.mostrarAlerta("Todos los campos deben estar rellenos.", Alert.AlertType.ERROR);
+            return; //para que se reinicie el programa y no realice la comprobación siguiente
         }
 
         //compruebo QUE NO EXISTA UN EMAIL IGUAL --> en la base de datos ya es unique, por lo que da error, pero saco una alerta
@@ -75,7 +79,6 @@ public class PrincipalController {
         //BORRo LOS datos de los CAMPOS
         nombreTF.clear();
         emailTF.clear();
-
     }//onRegistrarseClick
 
 
@@ -84,5 +87,4 @@ public class PrincipalController {
     void onSalirClick(ActionEvent event) {
         utilidades.salir();
     }//onSalirClick
-
 }//class

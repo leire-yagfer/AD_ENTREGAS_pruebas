@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class comprobaciones {
 
-    //método que verifica si el email ya está utilizado o no
+    //método que verifica si el email ya está en uso o no
     public static boolean existeEmail(String email) {
         String sql = "SELECT COUNT(*) FROM Clientes WHERE email = ?"; //consulta sql para contar cuántos registros hay con el email proporcionado
         try (Connection connection = conexionBBDD.conectar(); PreparedStatement statement = connection.prepareStatement(sql)) {
