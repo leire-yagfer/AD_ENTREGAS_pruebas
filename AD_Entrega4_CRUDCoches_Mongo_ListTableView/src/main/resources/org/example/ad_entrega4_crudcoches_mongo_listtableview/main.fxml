@@ -51,7 +51,7 @@
                 <Font size="24.0" />
             </font>
         </Button>
-        <TableView fx:id="tableViewCoches" layoutX="152.0" layoutY="471.0" prefHeight="371.0" prefWidth="688.0">
+        <TableView fx:id="tableViewCoches" layoutX="152.0" layoutY="471.0" onMouseClicked="#onElegirCocheClick" prefHeight="371.0" prefWidth="688.0">
             <columns>
                 <TableColumn fx:id="colMatricula" prefWidth="172.0" text="Matrícula" />
                 <TableColumn fx:id="colMarca" prefWidth="172.0" text="Marca" />

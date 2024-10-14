@@ -1,7 +1,6 @@
 package org.example.ad_entrega4_crudcoches_mongo_listtableview.controller;
 
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,7 +11,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import org.example.ad_entrega4_crudcoches_mongo_listtableview.util.ConexionBBDD;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import org.example.ad_entrega4_crudcoches_mongo_listtableview.model.Coche;
+
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,16 +35,16 @@ public class MainController implements Initializable {
     private Button cancelarBoton;
 
     @FXML
-    private TableColumn<?, ?> colMarca;
+    private TableColumn<Coche, String> colMatricula;
 
     @FXML
-    private TableColumn<?, ?> colMatricula;
+    private TableColumn<Coche, String> colMarca;
 
     @FXML
-    private TableColumn<?, ?> colModelo;
+    private TableColumn<Coche, String> colModelo;
 
     @FXML
-    private TableColumn<?, ?> colTipo;
+    private TableColumn<Coche, String> colTipo;
 
     @FXML
     private Button eliminarBoton;
@@ -54,12 +56,13 @@ public class MainController implements Initializable {
     private Button nuevoBoton;
 
     @FXML
-    private TableView<?> tableViewCoches;
+    private TableView<Coche> tableViewCoches; //defino el tipo de datoq ue va a mostrar
 
     @FXML
     private ComboBox<String> tipoCB; //tipo de dato que almacena el ComboBox
 
-    MongoClient con;
+    ObservableList<Coche> coches = FXCollections.observableArrayList(); //creo un ObservableList de tipo coche que va a almacenar todos los coches
+
 
 
 
@@ -67,144 +70,49 @@ public class MainController implements Initializable {
     //método que me carga los datos del comboBox
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<String> tipoCoche = FXCollections.observableArrayList("SUV", "Monovolumen", "Deportivo", "Pick-up"); //creo una lista con los tipos de coch que hay
+        //COMBOBOX --> le inicializo con los tipos de coche que hay
+        ObservableList<String> tipoCoche = FXCollections.observableArrayList("SUV", "Monovolumen", "Deportivo", "Pick-up", "Familiar"); //creo una lista con los tipos de coche
         tipoCB.setItems(tipoCoche); //asigno la lista al ComboBox
 
 
-        //CONEXIÓN A LA BBDD
-        try {
-            con = ConexionBBDD.conectar();
-
-
-            //La clase MongoDatabase nos ofrece el método getDatabase() que nos permite seleccionar la base de datos
-            //con la que queremos trabajar
-            // Me conecto a la BD "taller" si NO existe la crea.
-            MongoDatabase database= con.getDatabase("Concesionario");
-
-/*
-            //Comencemos creando una Colección (equivalente a una tabla para MongoDB) para nuestra base de datos.
-
-            //Me devuelve una coleccion si no existe la crea
-            MongoCollection<Document> collection = database.getCollection("personajes");
-
-            // Eliminar la colección y empezar de nuevo
-
-            collection.drop();
-            System.out.println("La coleccion se ha borrado Correctamente.\n");
-            //creo una nueva coleccion
-            database.createCollection("personajes");
-            System.out.println("Coleccion creada Satisfactoriamente.\n");
-
-
-            Document mickeyMouse = new Document();
-            Document charlieBrown = new Document();
-            //crear un documento con los valores que se insertarán usando el método append()
-            mickeyMouse.append("_id", 1)
-                    .append("nombre", "Mickey Mouse")
-                    .append("creador", new Document("nombre", "Walt").append("apellido", "Disney"))
-                    .append("mascota", "Pluto");
-
-            charlieBrown.append("_id", 2)
-                    .append("nombre", "Charlie Brown")
-                    .append("creador", new Document("nombre", "Charles").append("apellido", "Shultz"))
-                    .append("mascota", "Snoopy");
-
-            try {
-                //La función ".insertOne()" se utiliza para insertar el documento en la colección.
-                collection.insertOne(mickeyMouse);
-                collection.insertOne(charlieBrown);
-                System.out.println("Documento Insertado Correctamente. \n");
-            } catch (MongoWriteException mwe) {
-                if (mwe.getError().getCategory().equals(ErrorCategory.DUPLICATE_KEY)) {
-                    System.out.println("El documento con esa identificación ya existe");
-                }
-            }
-
-            // Tamaño de l coleccion
-            System.out.println("Tamaño Collection: " + collection.count() + " documentos. \n");
-
-            // Crear e insertar multiples documentos
-            List<Document> documents = new ArrayList<Document>();
-            for (int i = 3; i < 51; i++) {
-                documents.add(new Document("_id", i)
-                        .append("nombre", "")
-                        .append("creador", "")
-                        .append("mascota", "")
-                );
-            }
-            collection.insertMany(documents);
-
-            // Datos básicos de la recogida
-            System.out.println("Tamaño Coleccion: " + collection.count() + " documentos. \n");
-
-            // Modificar un documento
-            // imprimir el tercer documento antes de actualizar.
-            Document third = collection.find(Filters.eq("_id", 3)).first();
-            System.out.println("Original third document:");
-            System.out.println(third.toJson()); //imprimir en formato Json
-
-            collection.updateOne(new Document("_id", 3), //criterio de búsqueda que MongoDB utiliza para encontrar el documento a modificar
-                    new Document("$set", //creo un nuevo documento para los cambios
-                            new Document("nombre", "Dilbert")
-                                    .append("creador", new Document("nombre", "Scott").append("apellido", "Adams"))
-                                    .append("mascota", "Dogbert"))
-            );
-
-            System.out.println("\n Modificar el 3 documento:");
-            Document dilbert = collection.find(Filters.eq("_id", 3)).first();
-            System.out.println(dilbert.toJson());
-
-            // Encuentre e imprima TODOS los documentos de la colección
-            System.out.println("\n Imprime los documentos.");
-
-            MongoCursor<Document> cursor = collection.find().iterator(); //iterator: permite recuperar los resultados de la consulta uno por uno
-            try {
-                while (cursor.hasNext()) {
-                    System.out.println(cursor.next().toJson());
-                }
-
-            } finally {
-                cursor.close();
-            }
-
-            //Borrar datos
-            System.out.println("\n Eliminar documentos con un id mayor o igual a 4.");
-
-            //borro todos los documentos con id>4
-            collection.deleteMany(Filters.gte("_id", 4)); //gte = comparador "mas grande que"
-
-            // Encuentre e imprima TODOS los documentos de la colección
-            System.out.println("\nImprime los documentos.");
-
-            MongoCursor<Document> cursor2 = collection.find().iterator();
-            try {
-                while (cursor2.hasNext()) {
-                    System.out.println(cursor2.next().toJson());
-                }
-
-            } finally {
-                cursor2.close();
-            }
-
-            //me desconecto de la BD
-            ConexionBBDD.desconectar(con);
-            System.out.println("\n Desconectado de la BD.");
-*/
-        } catch (Exception exception) {
-            System.err.println(exception.getClass().getName() + ": " + exception.getMessage());
-        }
-
-
-
-
+        //TABLEVIEW --> inicializo las columnas
+        //inicializo las columnas del tableView (lo que hay entre "" es el getter de cada propiedad de la clase coche)
+        colMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
+        colMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
+        colModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
+        colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+        //añado coches
+        Coche coche1 = new Coche("6666HHH", "Renault", "Clio", "Deportivo"); //creo el coche
+        coches.add(coche1); //lo añado al ObservableList
+        Coche coche2 = new Coche("5555BCD", "Ford", "SMax", "Familiar");
+        coches.add(coche2);
+        //agrego al tableView los coches creados
+        tableViewCoches.setItems(coches);
     }//initialize
 
 
+    //método que muestra los datos del coche seleccionado del tableView en los distintos TextFields y comboBox
+    @FXML
+    void onElegirCocheClick(MouseEvent event) {
+        Coche cocheSeleccionado = tableViewCoches.getSelectionModel().getSelectedItem(); //obtengo el coche seleccionado en el tableView y lo guardo en la variable cocheSeleccioando de tipo Coche
+        if (cocheSeleccionado != null) { //si hay un coche seleccionado
+            //pongo los datos del coche en los diferentes TextFields y comboBox
+            matriculaTF.setText(cocheSeleccionado.getMatricula());
+            marcaTF.setText(cocheSeleccionado.getMarca());
+            modeloTF.setText(cocheSeleccionado.getModelo());
+            tipoCB.getSelectionModel().select(cocheSeleccionado.getTipo());
+        }//if
+    }//onElegirCocheClick
+
+
+    //método que añade el nuevo coche creado
     @FXML
     void onNuevoClick(ActionEvent event) {
 
     }//onNuevoClick
 
+
+    //método en el que si se han realizado cambios en los datos de algún coche, lo actualizo
     @FXML
     void onGuardarCambiosClick(ActionEvent event) {
 
@@ -220,9 +128,21 @@ public class MainController implements Initializable {
         tipoCB.getSelectionModel().clearSelection();
     }//onCancelarClick
 
+
+
+    //método que elimina el coche seleccionado
     @FXML
     void onEliminarClick(ActionEvent event) {
+        Coche cocheSeleccionado = tableViewCoches.getSelectionModel().getSelectedItem(); //obtengo el coche seleccionado en el tableView y lo guardo en la variable cocheSeleccioando de tipo Coche
+        if (cocheSeleccionado != null) { //si hay un coche seleccionado
+            coches.remove(cocheSeleccionado);
+        }//if
 
+        //cuando elimino el coche, limpio los datos de los campos
+        matriculaTF.clear();
+        marcaTF.clear();
+        modeloTF.clear();
+        tipoCB.getSelectionModel().clearSelection();
     }//onEliminarClick
 
 
