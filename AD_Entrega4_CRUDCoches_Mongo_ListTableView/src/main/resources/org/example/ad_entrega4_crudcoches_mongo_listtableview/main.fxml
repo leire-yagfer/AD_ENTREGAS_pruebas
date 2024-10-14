@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="875.0" prefWidth="991.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="875.0" prefWidth="991.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ad_entrega4_crudcoches_mongo_listtableview.MainController">
     <children>
         <Label layoutX="235.0" layoutY="76.0" text="Matrícula">
             <font>
@@ -32,17 +31,17 @@
                 <Font size="24.0" />
             </font>
         </Label>
-        <Button fx:id="nuevoBoton" layoutX="101.0" layoutY="371.0" mnemonicParsing="false" onAction="#onNuevoClick" text="Nuevo">
+        <Button fx:id="nuevoBoton" layoutX="152.0" layoutY="371.0" mnemonicParsing="false" onAction="#onNuevoClick" text="Nuevo">
             <font>
                 <Font size="24.0" />
             </font>
         </Button>
-        <Button fx:id="guadarCambiosBoton" layoutX="258.0" layoutY="371.0" mnemonicParsing="false" onAction="#onGuardarCambiosClick" prefHeight="51.0" prefWidth="217.0" text="Guardar cambios">
+        <Button fx:id="guadarCambiosBoton" layoutX="299.0" layoutY="371.0" mnemonicParsing="false" onAction="#onGuardarCambiosClick" prefHeight="51.0" prefWidth="217.0" text="Guardar cambios">
             <font>
                 <Font size="24.0" />
             </font>
         </Button>
-        <Button fx:id="cancelarBoton" layoutX="543.0" layoutY="371.0" mnemonicParsing="false" onAction="#onCancelarClick" text="Cancelar">
+        <Button fx:id="cancelarBoton" layoutX="559.0" layoutY="371.0" mnemonicParsing="false" onAction="#onCancelarClick" text="Cancelar">
             <font>
                 <Font size="24.0" />
             </font>
