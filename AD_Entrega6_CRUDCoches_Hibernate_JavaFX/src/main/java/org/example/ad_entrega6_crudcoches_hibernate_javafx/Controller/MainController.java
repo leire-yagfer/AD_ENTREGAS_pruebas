@@ -94,9 +94,8 @@ public class MainController implements Initializable {
             if (cocheDAO.insertarCoche(cocheNuevo) > 0) {
                 actualizarTabla(); //llamo al método que actualiza la tabla después de haber realizado la inserción
                 limpiarCampos(); //limpio los campos
-                System.out.println("Coche insertado correctamente.");
             } else {
-                System.out.println("No se ha podido insertar el coche.");
+                ComprobacionesYAlertas.mostrarAlerta("No se ha podido agregar el coche. Inténtelo de nuevo.");
             }//if-else
         }//if-else
     }//onNuevoClick
@@ -131,9 +130,8 @@ public class MainController implements Initializable {
             //compruebo si se ha llevado a cabo la actualización
             if (cocheDAO.actualizarCoche(cocheSeleccionado) > 0) {
                 actualizarTabla(); //actualizo la tabla
-                System.out.println("Coche actualizado correctamente.");
             } else {
-                System.out.println("Error al actualizar los datos del coche.");
+                ComprobacionesYAlertas.mostrarAlerta("Error al actualizar los datos del coche.");
             }//if-else
         }//if-elseif
     }//onGuardarCambiosClick
@@ -157,9 +155,8 @@ public class MainController implements Initializable {
         if (cocheSeleccionado != null && cocheDAO.eliminarCoche(cocheSeleccionado) > 0) {
             actualizarTabla(); //actualizo la tabla
             limpiarCampos(); //limpio todos los campos
-            System.out.println("Coche eliminado correctamente.");
         } else {
-            System.out.println("No se ha podido eliminar el coche.");
+            ComprobacionesYAlertas.mostrarAlerta("No se ha podido eliminar el coche.");
         }//if-else
     }//onEliminarClick
 
