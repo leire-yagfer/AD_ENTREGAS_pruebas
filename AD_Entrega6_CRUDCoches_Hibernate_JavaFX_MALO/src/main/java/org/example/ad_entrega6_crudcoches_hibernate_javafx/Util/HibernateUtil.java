@@ -13,7 +13,8 @@ public class HibernateUtil {
     static {
         try {
             //cargar la configuración desde el archivo hibernate.cfg.xml
-            Configuration cfg = new Configuration().configure(); //solo carga el archivo en el classpath
+            Configuration cfg = new Configuration(); //instancia de la clase Configuration de Hibernate, que representa la configuración necesaria para establecer una conexión con la base de datos y gestionar el mapeo entre las entidades y las tablas
+            cfg.configure("hibernate.cfg.xml"); //carga la configuración desde el archivo hibernate.cfg.xml, que contiene los parámetros necesarios para la conexión a la BD
             cfg.addAnnotatedClass(Coche.class); //registra la clase coche como entidad
             factory = cfg.buildSessionFactory(); //construye el sessionfactory
         } catch (Throwable ex) {

@@ -8,6 +8,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import org.example.ad_entrega6_crudcoches_hibernate_javafx.DAO.CocheDAO;
+import org.example.ad_entrega6_crudcoches_hibernate_javafx.DAO.CocheDAOImpl;
+import org.example.ad_entrega6_crudcoches_hibernate_javafx.Model.Coche;
+import org.example.ad_entrega6_crudcoches_hibernate_javafx.Util.ComprobacionesYAlertas;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -16,57 +20,36 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
+    private final CocheDAO cocheDAO = new CocheDAOImpl();
+
     //ATRIBUTOS
     @FXML
     private TextField matriculaTF;
-
     @FXML
     private TextField marcaTF;
-
     @FXML
     private TextField modeloTF;
-
     @FXML
-    private Button cancelarBoton;
-
+    private TableColumn<Coche, String> colMatricula;
     @FXML
-    private TableColumn<coche, String> colMatricula;
-
+    private TableColumn<Coche, String> colMarca;
     @FXML
-    private TableColumn<coche, String> colMarca;
-
+    private TableColumn<Coche, String> colModelo;
     @FXML
-    private TableColumn<coche, String> colModelo;
-
+    private TableColumn<Coche, String> colTipo;
     @FXML
-    private TableColumn<coche, String> colTipo;
-
+    private TableView<Coche> tableViewCoches;
     @FXML
-    private Button eliminarBoton;
+    private ComboBox<String> tipoCB;
 
-    @FXML
-    private Button guadarCambiosBoton;
-
-    @FXML
-    private Button nuevoBoton;
-
-    @FXML
-    private TableView<coche> tableViewCoches; //defino el tipo de datoq ue va a mostrar
-
-    @FXML
-    private ComboBox<String> tipoCB; //tipo de dato que almacena el ComboBox
-
-    ObservableList<coche> cochesOL; //creo un ObservableList de tipo coche que va a almacenar todos los coches
-
+    private ObservableList<Coche> cochesOL;
 
     //MÉTODOS
-    //método que me carga los datos del comboBox
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //COMBOBOX --> le inicializo con los tipos de coche que hay
         ObservableList<String> tipoCoche = FXCollections.observableArrayList("SUV", "Monovolumen", "Deportivo", "Pick-up", "Familiar"); //creo una lista con los tipos de coche
         tipoCB.setItems(tipoCoche); //asigno la lista al ComboBox
-
 
         //TABLEVIEW --> inicializo las columnas
         //inicializo las columnas del tableView (lo que hay entre "" es el getter de cada propiedad de la clase coche)
@@ -75,12 +58,8 @@ public class MainController implements Initializable {
         colModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
 
-
-        //llamo al método que se conecta a la BD --> crea el dataBase y la tabla coches
-        cocheDAO.crearBD();
-
-        //llamo al método que muestra los coches almacenados en la base de datos y los añado a la tableView
-        ArrayList<coche> listarCoches = cocheDAO.mostrarCoches(); //creo un ArrayList para convertir a ObservableList
+        //cargo los coches de la BD en la tabla
+        ArrayList<Coche> listarCoches = cocheDAO.mostrarCoches();
         cochesOL = FXCollections.observableArrayList(listarCoches);
         tableViewCoches.setItems(cochesOL);
     }//initialize
@@ -89,7 +68,7 @@ public class MainController implements Initializable {
     //método que muestra los datos del coche seleccionado del tableView en los distintos TextFields y comboBox
     @FXML
     void onElegirCocheClick(MouseEvent event) {
-        coche cocheSeleccionado = tableViewCoches.getSelectionModel().getSelectedItem(); //obtengo el coche seleccionado en el tableView y lo guardo en la variable cocheSeleccioando de tipo Coche
+        Coche cocheSeleccionado = tableViewCoches.getSelectionModel().getSelectedItem(); //obtengo el coche seleccionado en el tableView y lo guardo en la variable cocheSeleccioando de tipo Coche
         if (cocheSeleccionado != null) { //si hay un coche seleccionado
             //pongo los datos del coche en los diferentes TextFields y comboBox
             matriculaTF.setText(cocheSeleccionado.getMatricula());
@@ -100,6 +79,7 @@ public class MainController implements Initializable {
     }//onElegirCocheClick
 
 
+
     //método que añade el nuevo coche creado
     @FXML
     void onNuevoClick(ActionEvent event) {
@@ -108,104 +88,111 @@ public class MainController implements Initializable {
         String modelo = modeloTF.getText();
         String tipo = tipoCB.getSelectionModel().getSelectedItem();
 
-        if (matricula.isEmpty() || marca.isEmpty() || modelo.isEmpty() || tipo.isEmpty()) {
-            ComprobacionesYAlertas.mostrarAlerta("Todos los campos han de estar rellenos.");
-        } else {
-            //compruebo que la matrícula cumple con el formato
-            if (!ComprobacionesYAlertas.matriculaValida(matricula)) {
-                ComprobacionesYAlertas.mostrarAlerta("La matrícula debe tener el formato nnnnLLL.");
-            } else if (cocheDAO.existeMatricula(matricula) > 0) { //compruebo que la matrícula no esté ya en la BD
-                ComprobacionesYAlertas.mostrarAlerta("Esa matrícula ya está en uso. Pruebe con otra.");
-            } else { //si cumple
-                coche cocheNuevo = new coche(matricula, marca, modelo, tipo);
-                if (cocheDAO.insertarCoche(cocheNuevo) > 0) {
-                    actualizarTabla(); //llamo al método que actualiza la tabla después de haber realizado la inserción
-                    System.out.println("Coche insertado correctamente.");
-                    //cuando elimino el coche, limpio los datos de los campos
-                    matriculaTF.clear();
-                    marcaTF.clear();
-                    modeloTF.clear();
-                    tipoCB.getSelectionModel().clearSelection();
-                } else {
-                    System.out.println("No se ha podido insertar el coche.");
-                }//if-else
+        if (validarCampos(matricula, marca, modelo, tipo) && validarMatriculaUnica(matricula)) {
+            Coche cocheNuevo = new Coche(matricula, marca, modelo, tipo);
+            if (cocheDAO.insertarCoche(cocheNuevo) > 0) {
+                actualizarTabla(); //llamo al método que actualiza la tabla después de haber realizado la inserción
+                limpiarCampos();
+                System.out.println("Coche insertado correctamente.");
+            } else {
+                System.out.println("No se ha podido insertar el coche.");
             }//if-else
         }//if-else
     }//onNuevoClick
 
 
+
     //método en el que si se han realizado cambios en los datos de algún coche, lo actualizo
     @FXML
     void onGuardarCambiosClick(ActionEvent event) {
-        coche cocheSeleccionado = tableViewCoches.getSelectionModel().getSelectedItem(); //obtengo el coche seleccionado en el tableView y lo guardo en la variable cocheSeleccioando de tipo Coche
+        Coche cocheSeleccionado = tableViewCoches.getSelectionModel().getSelectedItem(); //obtengo el coche seleccionado en el tableView y lo guardo en la variable cocheSeleccioando de tipo Coche
 
         //compruebo si hay algún coche seleccionado
         if (cocheSeleccionado == null) {
             ComprobacionesYAlertas.mostrarAlerta("No se ha seleccionado ningún coche.");
             return; //si no hay coche seleccionado, salgo del método
-        }
+        }//if
 
-        String matricula = matriculaTF.getText();
         String marca = marcaTF.getText();
         String modelo = modeloTF.getText();
         String tipo = tipoCB.getSelectionModel().getSelectedItem();
 
         //compruebo que la matricula introducida no se haya modificado, porque se debe mantener constante
-        if (!Objects.equals(cocheSeleccionado.getMatricula(), matricula)) {
+        if (!Objects.equals(cocheSeleccionado.getMatricula(), matriculaTF.getText())) {
             ComprobacionesYAlertas.mostrarAlerta("La matrícula no puede ser modificada.");
             matriculaTF.setText(cocheSeleccionado.getMatricula()); //cambio a la matricula original en caso de modificarse
-        }
+        } else if (validarCampos(cocheSeleccionado.getMatricula(), marca, modelo, tipo)) {
+            //actualizo los campos que pueden ser modificados
+            cocheSeleccionado.setMarca(marca);
+            cocheSeleccionado.setModelo(modelo);
+            cocheSeleccionado.setTipo(tipo);
 
-        //verifico que los otros campos no estén vacíos
-        if (marca.isEmpty() || modelo.isEmpty() || tipo == null) {
-            ComprobacionesYAlertas.mostrarAlerta("Todos los campos deben estar rellenos.");
-            return;
-        }
-
-        //actualizo los campos que pueden ser modificados
-        cocheSeleccionado.setMarca(marca);
-        cocheSeleccionado.setModelo(modelo);
-        cocheSeleccionado.setTipo(tipo);
-
-        if (cocheDAO.actualizarCoche(cocheSeleccionado) > 0) {
-            actualizarTabla();
-            System.out.println("Coche actualizado correctamente.");
-        } else System.out.println("Error al actualizar los datos del coche.");
+            if (cocheDAO.actualizarCoche(cocheSeleccionado) > 0) {
+                actualizarTabla();
+                System.out.println("Coche actualizado correctamente.");
+            } else {
+                System.out.println("Error al actualizar los datos del coche.");
+            }//if-else
+        }//if-elseif
     }//onGuardarCambiosClick
+
 
 
     //método que limpia todos los campos, ya que se cancela lo que se estuviese queriendo hacer
     @FXML
     void onCancelarClick(ActionEvent event) {
-        matriculaTF.clear();
-        marcaTF.clear();
-        modeloTF.clear();
-        tipoCB.getSelectionModel().clearSelection();
-    }//onCancelarClick
+        limpiarCampos();
+    }
+
 
 
     //método que elimina el coche seleccionado
     @FXML
     void onEliminarClick(ActionEvent event) {
-        coche cocheSeleccionado = tableViewCoches.getSelectionModel().getSelectedItem(); //obtengo el coche seleccionado en el tableView y lo guardo en la variable cocheSeleccioando de tipo Coche
-        if (cocheDAO.eliminarCoche(cocheSeleccionado) > 0) { //si hay un coche seleccionado
-            actualizarTabla();
+        Coche cocheSeleccionado = tableViewCoches.getSelectionModel().getSelectedItem(); //obtengo el coche seleccionado en el tableView y lo guardo en la variable cocheSeleccioando de tipo Coche
+        //verifico que hay un coche seleccionado y si el método eliminar coche devuelve un 1, que indica que se va a proceder a la eliminación del coche
+        if (cocheSeleccionado != null && cocheDAO.eliminarCoche(cocheSeleccionado) > 0) {
+            actualizarTabla(); //actualizo la tabla
+            limpiarCampos(); //limpio todos los campos
             System.out.println("Coche eliminado correctamente.");
-        } else System.out.println("No se ha podido eliminar el coche.");
+        } else {
+            System.out.println("No se ha podido eliminar el coche.");
+        }
+    }
 
-        //cuando elimino el coche, limpio los datos de los campos
+    //validar campos de entrada
+    private boolean validarCampos(String matricula, String marca, String modelo, String tipo) {
+        if (matricula.isEmpty() || marca.isEmpty() || modelo.isEmpty() || tipo == null) {
+            ComprobacionesYAlertas.mostrarAlerta("Todos los campos han de estar rellenos.");
+            return false;
+        }
+        if (!ComprobacionesYAlertas.validarMatricula(matricula)) {
+            ComprobacionesYAlertas.mostrarAlerta("La matrícula debe tener el formato nnnnLLL.");
+            return false;
+        }
+        return true;
+    }
+
+    //verifación de si la matrícula es única
+    private boolean validarMatriculaUnica(String matricula) {
+        if (cocheDAO.existeMatricula(matricula) > 0) {
+            ComprobacionesYAlertas.mostrarAlerta("Esa matrícula ya está en uso. Pruebe con otra.");
+            return false;
+        }
+        return true;
+    }
+
+    //método para actualizar la tabla después de realizar cambios
+    private void actualizarTabla() {
+        ArrayList<Coche> listarCoches = cocheDAO.mostrarCoches();
+        tableViewCoches.getItems().setAll(listarCoches);
+    }
+
+    //método que limpia los campos de entrada
+    private void limpiarCampos() {
         matriculaTF.clear();
         marcaTF.clear();
         modeloTF.clear();
         tipoCB.getSelectionModel().clearSelection();
-    }//onEliminarClick
-
-
-    //método que actualiza los datos de la tabla después de realizar cambios
-    void actualizarTabla() {
-        ArrayList<coche> listarCoches = cocheDAO.mostrarCoches();
-        tableViewCoches.getItems().setAll(listarCoches);
-    }//actualizarTabla
-
-
-}//class
+    }
+}
