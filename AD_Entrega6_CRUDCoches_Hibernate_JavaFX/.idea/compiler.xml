@@ -7,7 +7,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="AD_Entrega6_CRUDCoches_Hibernate_JavaFX" />
-        <module name="AD_Entrega4" />
       </profile>
     </annotationProcessing>
   </component>
