@@ -1,0 +1,13 @@
+package org.example.ad_entrega6_crudcoches_hibernate.DAO;
+
+import org.example.ad_entrega6_crudcoches_hibernate.Model.Coche;
+
+import java.util.ArrayList;
+
+public interface CocheDAO {
+    ArrayList<Coche> mostrarCoches(); //método para mostrar todos los coches almacenados en la base de datos
+    int insertarCoche(Coche coche); //método para insertar un nuevo coche
+    int eliminarCoche(Coche coche); //método para eliminar un coche
+    int actualizarCoche(Coche coche); //método para actualizar un coche
+    int existeMatricula(String matricula); //método para verificar si una matrícula ya existe
+}//class
