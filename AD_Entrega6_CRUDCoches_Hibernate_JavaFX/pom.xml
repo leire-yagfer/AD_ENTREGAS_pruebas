@@ -4,16 +4,30 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.example</groupId>
-  <artifactId>AD_Entrega6_CRUDCoches_Hibernate_JavaFX</artifactId>
+  <groupId>com.example</groupId>
+  <artifactId>AD_Entrega4</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>AD_Entrega6_CRUDCoches_Hibernate_JavaFX</name>
+  <name>AD_Entrega4</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 <junit.version>5.10.2</junit.version>  </properties>
 
   <dependencies>
+    <!--Añado esta dependencia-->
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongodb-driver</artifactId>
+      <version>3.12.11</version>
+    </dependency>
+
+    <!--Y esta otra dependencia-->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.9.1</version>
+    </dependency>
+
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
@@ -66,7 +80,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>org.example.ad_entrega6_crudcoches_hibernate_javafx/org.example.ad_entrega6_crudcoches_hibernate_javafx.HelloApplication</mainClass>
+              <mainClass>com.example.ad_entrega4/com.example.ad_entrega4.HelloApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
