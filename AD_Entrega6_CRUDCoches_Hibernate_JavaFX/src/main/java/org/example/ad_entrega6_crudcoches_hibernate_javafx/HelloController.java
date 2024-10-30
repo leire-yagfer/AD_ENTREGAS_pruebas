@@ -1,4 +1,4 @@
-package org.example.ad_entrega6_crudcoches_hibernate;
+package org.example.ad_entrega6_crudcoches_hibernate_javafx;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -12,7 +12,6 @@ import org.example.ad_entrega6_crudcoches_hibernate.DAO.CocheDAOImpl;
 import org.example.ad_entrega6_crudcoches_hibernate.Model.Coche;
 import org.example.ad_entrega6_crudcoches_hibernate.Util.ComprobacionesYAlertas;
 import org.example.ad_entrega6_crudcoches_hibernate.Util.HibernateUtil;
-import org.hibernate.Session;
 
 import java.net.URL;
 import java.util.ResourceBundle;
