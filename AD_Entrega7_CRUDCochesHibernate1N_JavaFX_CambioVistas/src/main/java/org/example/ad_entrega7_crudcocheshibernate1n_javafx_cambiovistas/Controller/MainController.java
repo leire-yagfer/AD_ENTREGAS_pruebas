@@ -34,6 +34,10 @@ public class MainController implements Initializable {
     @FXML
     private TextField modeloTF;
     @FXML
+    private ComboBox<String> tipoCB;
+    @FXML
+    private TableView<Coche> tableViewCoches;
+    @FXML
     private TableColumn<Coche, String> colMatricula;
     @FXML
     private TableColumn<Coche, String> colMarca;
@@ -41,10 +45,6 @@ public class MainController implements Initializable {
     private TableColumn<Coche, String> colModelo;
     @FXML
     private TableColumn<Coche, String> colTipo;
-    @FXML
-    private TableView<Coche> tableViewCoches;
-    @FXML
-    private ComboBox<String> tipoCB;
 
     private ObservableList<Coche> cochesOL;
 
@@ -87,7 +87,7 @@ public class MainController implements Initializable {
 
     //método que añade el nuevo coche creado
     @FXML
-    void onNuevoClick(ActionEvent event) {
+    void onInsertarClick(ActionEvent event) {
         String matricula = matriculaTF.getText();
         String marca = marcaTF.getText();
         String modelo = modeloTF.getText();
@@ -102,13 +102,13 @@ public class MainController implements Initializable {
                 ComprobacionesYAlertas.mostrarAlerta("No se ha podido agregar el coche. Inténtelo de nuevo.");
             }//if-else
         }//if-else
-    }//onNuevoClick
+    }//onInsertarClick
 
 
 
     //método en el que si se han realizado cambios en los datos de algún coche, lo actualizo
     @FXML
-    void onGuardarCambiosClick(ActionEvent event) {
+    void onActualizarClick(ActionEvent event) {
         Coche cocheSeleccionado = tableViewCoches.getSelectionModel().getSelectedItem(); //obtengo el coche seleccionado en el tableView y lo guardo en la variable cocheSeleccioando de tipo Coche
 
         //compruebo si hay algún coche seleccionado
@@ -138,21 +138,21 @@ public class MainController implements Initializable {
                 ComprobacionesYAlertas.mostrarAlerta("Error al actualizar los datos del coche.");
             }//if-else
         }//if-elseif
-    }//onGuardarCambiosClick
+    }//onActualizarClick
 
 
 
     //método que limpia todos los campos, ya que se cancela lo que se estuviese queriendo hacer
     @FXML
-    void onCancelarClick(ActionEvent event) {
+    void onLimpiarClick(ActionEvent event) {
         limpiarCampos(); //llamo al método que elimina los datos de los campos
-    }//onCancelarClick
+    }//onLimpiarClick
 
 
 
     //método que elimina el coche seleccionado
     @FXML
-    void onEliminarClick(ActionEvent event) {
+    void onBorrarClick(ActionEvent event) {
         Coche cocheSeleccionado = tableViewCoches.getSelectionModel().getSelectedItem(); //obtengo el coche seleccionado en el tableView y lo guardo en la variable cocheSeleccioando de tipo Coche
 
         //verifico que hay un coche seleccionado y si el método eliminar coche devuelve un 1, que indica que se va a proceder a la eliminación del coche
@@ -162,7 +162,14 @@ public class MainController implements Initializable {
         } else {
             ComprobacionesYAlertas.mostrarAlerta("No se ha podido eliminar el coche.");
         }//if-else
-    }//onEliminarClick
+    }//onBorrarClick
+
+
+
+    @FXML
+    void onVerMultasClick(ActionEvent event) {
+
+    }//onVerMultasClick
 
 
 
