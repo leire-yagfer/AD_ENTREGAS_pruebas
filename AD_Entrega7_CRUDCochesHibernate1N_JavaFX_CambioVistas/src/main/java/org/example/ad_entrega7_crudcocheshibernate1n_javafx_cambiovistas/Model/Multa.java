@@ -23,16 +23,25 @@ public class Multa {
     @Column(name = "matricula")
     private String matricula;
 
+    @ManyToOne //utilizo Mto1 pq un coche (one) puede tener varias multas (many)
+    @JoinColumn(name="matricula", referencedColumnName="matricula")
+    //name es el atributo de la tabla multas que guarda la clave foránea (matricula)
+    //referencedColumnName es el atributo en la tabla coches a la que apunta la clave foránea (matricula en coches).
+    private Coche coche;
+
 
     //CONSTRUCTOR
     public Multa() {
     }
 
-    public Multa(String precio, LocalDate fecha, String matricula) {
+    public Multa(int id_multa, String precio, LocalDate fecha, String matricula, Coche coche) {
+        this.id_multa = id_multa;
         this.precio = precio;
         this.fecha = fecha;
         this.matricula = matricula;
+        this.coche = coche;
     }
+
 
     //GETTER Y SETTER
     public int getId_multa() {

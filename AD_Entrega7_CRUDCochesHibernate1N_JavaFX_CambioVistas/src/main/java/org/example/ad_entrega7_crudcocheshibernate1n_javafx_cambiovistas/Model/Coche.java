@@ -1,9 +1,7 @@
 package org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity //indica que esta clase es una entidad mapeada a una tabla en la base de datos
 @Table(name = "coches") //especifica el nombre de la tabla en la base de datos
@@ -19,6 +17,10 @@ public class Coche {
     private String modelo;
     @Column(name = "tipo")
     private String tipo;
+
+
+    @OneToMany(mappedBy = "coche", cascade = CascadeType.ALL, orphanRemoval = true) //indica que un coche (one) puede tener múltiples multas (many)
+    private List<Multa> multas;
 
 
     //CONSTRUCTOR
