@@ -4,7 +4,7 @@ import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Model.M
 
 import java.util.List;
 
-public interface MultasDAO {
+public interface MultaDAO {
     List<Multa> mostrarMultas(); //método para mostrar todos los coches almacenados en la base de datos
     int insertarMulta(Multa insertarMulta); //método para insertar un nuevo coche
     int eliminarMulta(Multa eliminarMulta); //método para eliminar un coche

@@ -1,6 +1,5 @@
 package org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.DAO;
 
-import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Model.Coche;
 import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Model.Multa;
 import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Util.HibernateUtil;
 import org.hibernate.Session;
@@ -9,7 +8,7 @@ import org.hibernate.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MultasDAOImpl implements MultasDAO{
+public class MultaDAOImpl implements MultaDAO {
 
     //método para obtener todas las multas almacenados en la base de datos
     @Override
