@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="843.0" prefWidth="734.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Controller.MultasController">
+<AnchorPane prefHeight="936.0" prefWidth="734.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Controller.MultasController">
    <children>
       <Label layoutX="141.0" layoutY="63.0" text="Matrícula">
          <font>
@@ -71,6 +70,11 @@
          </font>
       </Button>
       <Button fx:id="limpiarBoton" layoutX="549.0" layoutY="280.0" mnemonicParsing="false" onAction="#onLimpiarClick" prefHeight="51.0" prefWidth="169.0" text="LIMPIAR">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="atrasBoton" layoutX="275.0" layoutY="854.0" mnemonicParsing="false" onAction="#onVoloverAtrasClick" prefHeight="51.0" prefWidth="169.0" text="ATRÁS">
          <font>
             <Font size="24.0" />
          </font>

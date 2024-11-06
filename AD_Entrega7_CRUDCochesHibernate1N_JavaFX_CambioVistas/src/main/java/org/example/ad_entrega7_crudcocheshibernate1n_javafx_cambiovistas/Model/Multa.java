@@ -22,7 +22,7 @@ public class Multa {
     @Column(name = "fecha")
     private LocalDate fecha;
 
-    //El atributo matricula ya no es necesario, ya que se gestiona a través de la relación ManyToOne
+    //El atributo matricula no es necesario, ya que se gestiona a través de la relación ManyToOne
 
 
     @ManyToOne // utilizo Mto1 porque un coche (one) puede tener varias multas (many)

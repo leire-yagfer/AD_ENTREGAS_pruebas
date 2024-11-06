@@ -8,11 +8,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Model.Coche;
+import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Util.ComprobacionesAlertasCambioEscena;
 
 public class MultasController {
 
     @FXML
     private Button actualizarBoton;
+
+    @FXML
+    private Button atrasBoton;
 
     @FXML
     private Button borrarBoton;
@@ -47,6 +52,10 @@ public class MultasController {
     @FXML
     private TableView<?> tableViewCoches;
 
+
+    Coche cocheSelected;
+
+
     @FXML
     void onActualizarClick(ActionEvent event) {
 
@@ -67,9 +76,21 @@ public class MultasController {
 
     }
 
+
+    public void datosCocheMulta(Coche coche) {
+        cocheSelected = coche;
+        matriculaTF.setText(coche.getMatricula()); //pongo la matricula del coche seleccionado en la clase MainController pasado a través del método del cambio de escena
+    }//datosCocheMulta
+
+
     @FXML
     void onLimpiarClick(ActionEvent event) {
 
     }
 
-}
+    @FXML
+    void onVoloverAtrasClick(ActionEvent event) {
+        ComprobacionesAlertasCambioEscena.cambiarEscena(atrasBoton, "main.fxml");
+    }
+
+}//class
