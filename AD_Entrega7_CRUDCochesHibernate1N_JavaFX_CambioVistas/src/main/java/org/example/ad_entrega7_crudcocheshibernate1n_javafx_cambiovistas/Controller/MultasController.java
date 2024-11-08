@@ -44,13 +44,13 @@ public class MultasController implements Initializable {
     private TableColumn<?, ?> colPrecio;
 
     @FXML
-    private DatePicker idFechaDatePicker;
+    private DatePicker fechaDatePicker;
 
     @FXML
     private TextField idMultaTF;
 
     @FXML
-    private TextField idPrecioTF;
+    private TextField precioTF;
 
     @FXML
     private Button insertarBoton;
@@ -78,6 +78,21 @@ public class MultasController implements Initializable {
     }//initialize
 
 
+    //método que va a mostrar los datos de la multa en los diferentes TF
+    @FXML
+    void onElegirMultaClick(MouseEvent event) {
+        Multa multaSeleccionada = tableViewMultas.getSelectionModel().getSelectedItem(); //obtengo los datos de la multa
+
+        if(multaSeleccionada != null){
+            //pongo los datos de la matrícula en los TF
+            idMultaTF.setText(String.valueOf(multaSeleccionada.getId_multa())); //id_multa no es de tipo String por lo que lo tengo que cambiar a String
+            precioTF.setText(multaSeleccionada.getPrecio());
+            fechaDatePicker.setValue(multaSeleccionada.getFecha());
+        }
+    }//onElegirMultaClick
+
+
+
     @FXML
     void onActualizarClick(ActionEvent event) {
 
@@ -88,10 +103,6 @@ public class MultasController implements Initializable {
 
     }
 
-    @FXML
-    void onElegirCocheClick(MouseEvent event) {
-
-    }
 
     @FXML
     void onInsertarClick(ActionEvent event) {
@@ -114,9 +125,14 @@ public class MultasController implements Initializable {
 
     @FXML
     void onLimpiarClick(ActionEvent event) {
+        idMultaTF.clear();
+        precioTF.clear();
+        fechaDatePicker.setValue(null); //quito los datos que tuviese
+    }//onLimpiarClick
 
-    }
 
+
+    //método que cuando presiono el botón el botón vuelve a la pestaña principal
     @FXML
     void onVoloverAtrasClick(ActionEvent event) {
         ComprobacionesAlertasCambioEscena.cambiarEscena(atrasBoton, "main.fxml");
