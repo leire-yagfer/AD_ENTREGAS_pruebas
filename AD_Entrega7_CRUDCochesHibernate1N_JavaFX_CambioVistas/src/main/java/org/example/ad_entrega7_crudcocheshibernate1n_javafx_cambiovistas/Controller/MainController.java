@@ -187,7 +187,7 @@ public class MainController implements Initializable {
                 Stage stage = (Stage) verMultasBoton.getScene().getWindow();
                 stage.setScene(scene);
             } catch (Exception e) {
-                ComprobacionesAlertasCambioEscena.mostrarAlerta(e.getMessage());
+                System.out.println(e.getMessage());
             }//try-catch
         }//if
         else ComprobacionesAlertasCambioEscena.mostrarAlerta("Debe haber un coche seleccionado para obtener la información de sus multas.");

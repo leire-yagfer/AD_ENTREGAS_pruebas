@@ -26,7 +26,7 @@ public class Multa {
 
 
     @ManyToOne // utilizo Mto1 porque un coche (one) puede tener varias multas (many)
-    @JoinColumn(name="matricula", referencedColumnName="matricula", insertable = false, updatable = false)
+    @JoinColumn(name = "matricula", referencedColumnName = "matricula", insertable = false, updatable = false)
     // name es el atributo de la tabla multas que guarda la clave foránea (matricula)
     // referencedColumnName es el atributo en la tabla coches a la que apunta la clave foránea (matricula en coches).
     // insertable = false y updatable = false indican que la columna 'matricula' no se debe insertar ni actualizar desde esta clase

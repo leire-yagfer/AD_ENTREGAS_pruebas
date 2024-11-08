@@ -24,7 +24,7 @@ public class MultaDAOImpl implements MultaDAO {
         } else {
             try (Session session = factory.openSession()) {
                 transaction = session.beginTransaction();
-                multas = session.createQuery("from Multas WHERE coches.matricula = :matricula", Multa.class).setParameter("matricula", obtenerMultasCocheSeleccionado.getMatricula()).list();
+                multas = session.createQuery("from Multa m where m.coche.matricula = :matricula", Multa.class).setParameter("matricula", obtenerMultasCocheSeleccionado.getMatricula()).list();
                 transaction.commit();
             } catch (Exception e) {
                 if (transaction != null) transaction.rollback(); //si la transacción no es nula, hago rollback
@@ -33,7 +33,6 @@ public class MultaDAOImpl implements MultaDAO {
         }
         return multas; //devuelvo la lista de coches
     }//mostrarMultas
-
 
 
     //método para insertar una nueva multa en la base de datos
@@ -54,7 +53,6 @@ public class MultaDAOImpl implements MultaDAO {
     }//insertarMulta
 
 
-
     //método para eliminar una multa de la base de datos
     public int eliminarMulta(Multa eliminarMulta) {
         int semaforo = 0; //variable para controlar el estado de la operación
@@ -70,7 +68,6 @@ public class MultaDAOImpl implements MultaDAO {
         }
         return semaforo; //devuelvo el estado de la operación
     }//eliminarMulta
-
 
 
     //método para actualizar una multa en la base de datos
