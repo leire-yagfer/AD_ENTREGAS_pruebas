@@ -6,8 +6,8 @@ import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Model.M
 import java.util.List;
 
 public interface MultaDAO {
-    List<Multa> mostrarMultas(Coche coche); //método para mostrar todos los coches almacenados en la base de datos
-    int insertarMulta(Multa insertarMulta); //método para insertar un nuevo coche
-    int eliminarMulta(Multa eliminarMulta); //método para eliminar un coche
-    int actualizarMulta(Multa actualizarMulta); //método para actualizar un coche
+    List<Multa> mostrarMultas(Coche coche); //método para mostrar todas las multas almacenados en la base de datos
+    int insertarMulta(Multa insertarMulta, Coche coche); //método para insertar una nueva multa. Le paso el coche para que se la asigne al coche cuya matrícula es fija.
+    int eliminarMulta(Multa eliminarMulta); //método para eliminar una multa
+    int actualizarMulta(Multa actualizarMulta); //método para actualizar una multa
 }//class

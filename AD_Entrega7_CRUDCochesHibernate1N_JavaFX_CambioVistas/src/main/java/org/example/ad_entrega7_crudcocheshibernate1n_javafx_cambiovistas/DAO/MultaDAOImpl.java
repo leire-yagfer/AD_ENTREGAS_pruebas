@@ -35,13 +35,18 @@ public class MultaDAOImpl implements MultaDAO {
     }//mostrarMultas
 
 
+
     //método para insertar una nueva multa en la base de datos
     @Override
-    public int insertarMulta(Multa insertarMulta) {
+    public int insertarMulta(Multa insertarMulta, Coche coche) {
         int semaforo = 0; //variable para controlar el estado de la operación
         Transaction transaction = null; //inicializo la transacción como nula
         try (Session session = factory.openSession()) { //abro la sesión
             transaction = session.beginTransaction();
+
+            //tengo que asegurarme de asignar la matrícula de la multa antes de guardarla.
+            insertarMulta.setCoche(coche); // Asignamos el coche con la matrícula
+
             session.save(insertarMulta); //guardo el coche en la base de datos
             transaction.commit();
             semaforo = 1; //operación exitosa

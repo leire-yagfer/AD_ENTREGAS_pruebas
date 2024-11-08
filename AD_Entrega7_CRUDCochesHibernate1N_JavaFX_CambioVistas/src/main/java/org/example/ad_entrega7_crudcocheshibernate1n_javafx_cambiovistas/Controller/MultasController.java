@@ -19,6 +19,7 @@ import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Model.M
 import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Util.ComprobacionesAlertasCambioEscena;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -75,6 +76,9 @@ public class MultasController implements Initializable {
         colIdMulta.setCellValueFactory(new PropertyValueFactory<>("id_multa"));
         colPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
         colFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+
+        //hago que el TextField de la matrícula no sea editable
+        matriculaTF.setEditable(false);
     }//initialize
 
 
@@ -93,6 +97,34 @@ public class MultasController implements Initializable {
 
 
 
+    //método que permite añadir multas
+    @FXML
+    void onInsertarClick(ActionEvent event) {
+        //no necesito obtener el id_multa desde el TextField, ya que es autogenerado
+        String precio = precioTF.getText();
+        LocalDate fecha = fechaDatePicker.getValue();
+
+        if(precio.isEmpty() || fecha == null){ //compruebo que los campos obligatorios están rellenos
+            ComprobacionesAlertasCambioEscena.mostrarAlerta("El precio y la fecha han de estar rellenos.");
+        }//if
+
+        if(!ComprobacionesAlertasCambioEscena.esPrecioValido(precio)){ //si es incorrecto = false
+            ComprobacionesAlertasCambioEscena.mostrarAlerta("Precio introducido incorrecto. Debe estar formado por dígitos y como mucho dos decimales.");
+        }
+        else {
+            Multa multaNueva = new Multa(precio, fecha);
+            if(multaDAO.insertarMulta(multaNueva, cocheSelected) > 0){
+                actualizarTabla();
+                precioTF.clear();
+                fechaDatePicker.setValue(null);
+            }
+            else {
+                ComprobacionesAlertasCambioEscena.mostrarAlerta("No se ha podido agregar la multa. Inténtelo de nuevo.");
+            }
+        }//if-else
+    }//onInsertarClick
+
+
     @FXML
     void onActualizarClick(ActionEvent event) {
 
@@ -104,10 +136,7 @@ public class MultasController implements Initializable {
     }
 
 
-    @FXML
-    void onInsertarClick(ActionEvent event) {
 
-    }
 
 
     public void datosCocheMulta(Coche coche) {
@@ -137,4 +166,12 @@ public class MultasController implements Initializable {
     void onVoloverAtrasClick(ActionEvent event) {
         ComprobacionesAlertasCambioEscena.cambiarEscena(atrasBoton, "main.fxml");
     }
+
+
+    //método para actualizar la tabla después de realizar cambios
+    private void actualizarTabla() {
+        List<Multa> listarMultas = multaDAO.mostrarMultas(); //obtengo la lista de coches
+        multasOL = FXCollections.observableArrayList(listarMultas); //convierto a ObservableList
+        tableViewMultas.setItems(multasOL); //actualizo el TableView con la nueva lista
+    }//actualizarTabla
 }//class

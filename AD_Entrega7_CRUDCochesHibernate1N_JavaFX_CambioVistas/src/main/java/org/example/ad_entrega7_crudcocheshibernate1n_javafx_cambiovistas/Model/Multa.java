@@ -42,6 +42,11 @@ public class Multa {
         this.coche = coche;
     }
 
+    public Multa(String precio, LocalDate fecha) {
+        this.precio = precio;
+        this.fecha = fecha;
+    }
+
     // GETTER Y SETTER
     public int getId_multa() {
         return id_multa;
