@@ -3,6 +3,7 @@ package org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.DAO;
 import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Model.Coche;
 import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
@@ -10,13 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CocheDAOImpl implements CocheDAO {
+    SessionFactory factory = HibernateUtil.getSessionFactory();
 
     //método para obtener todos los coches almacenados en la base de datos
     @Override
     public List<Coche> mostrarCoches() {
         Transaction transaction = null; //inicializo la transacción
         List<Coche> coches = new ArrayList<>(); //inicializo la lista de coches
-        try (Session session = HibernateUtil.getSession()) { //utilizo HibernateUtil para obtener la sesión
+        try (Session session = factory.openSession()) { //utilizo HibernateUtil para obtener la sesión
             transaction = session.beginTransaction();
             coches = session.createQuery("from Coche", Coche.class).list(); //creo la consulta y obtengo la lista de coches
             transaction.commit();
@@ -33,7 +35,7 @@ public class CocheDAOImpl implements CocheDAO {
     public int insertarCoche(Coche insertarCoche) {
         int semaforo = 0; //variable para controlar el estado de la operación
         Transaction transaction = null; //inicializo la transacción como nula
-        try (Session session = HibernateUtil.getSession()) { //abro la sesión
+        try (Session session = factory.openSession()) { //abro la sesión
             transaction = session.beginTransaction();
             session.save(insertarCoche); //guardo el coche en la base de datos
             transaction.commit();
@@ -51,7 +53,7 @@ public class CocheDAOImpl implements CocheDAO {
     public int eliminarCoche(Coche eliminarCoche) {
         int semaforo = 0; //variable para controlar el estado de la operación
         Transaction transaction = null; //inicializo la transacción como nula
-        try (Session session = HibernateUtil.getSession()) { //abro la sesión
+        try (Session session = factory.openSession()) { //abro la sesión
             transaction = session.beginTransaction();
             session.delete(eliminarCoche); //elimino el coche
             transaction.commit();
@@ -69,7 +71,7 @@ public class CocheDAOImpl implements CocheDAO {
     public int actualizarCoche(Coche actualizarCoche) {
         int semaforo = 0; //variable para controlar el estado de la operación
         Transaction transaction = null; //inicializo la transacción como nula
-        try (Session session = HibernateUtil.getSession()) { //abro la sesión
+        try (Session session = factory.openSession()) { //abro la sesión
             transaction = session.beginTransaction();
             session.update(actualizarCoche); //actualizo el coche en la base de datos
             transaction.commit();
@@ -85,7 +87,7 @@ public class CocheDAOImpl implements CocheDAO {
     //método para verificar si una matrícula ya existe en la base de datos
     @Override
     public int existeMatricula(String matricula) {
-        try (Session session = HibernateUtil.getSession()) { //abro la sesión
+        try (Session session = factory.openSession()) { //abro la sesión
             Query<Coche> query = session.createQuery("from Coche where matricula = :matricula", Coche.class); //creo la consulta para buscar la matrícula
             query.setParameter("matricula", matricula); //asigno el valor del parámetro
             return query.uniqueResult() != null ? 1 : 0; //devuelvo 1 si existe, 0 si no

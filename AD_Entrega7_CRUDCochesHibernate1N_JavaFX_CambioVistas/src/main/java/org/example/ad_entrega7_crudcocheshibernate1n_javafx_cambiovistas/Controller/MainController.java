@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
-    private final CocheDAO cocheDAO = new CocheDAOImpl();
+    CocheDAO cocheDAO = new CocheDAOImpl();
 
     //ATRIBUTOS
     @FXML
