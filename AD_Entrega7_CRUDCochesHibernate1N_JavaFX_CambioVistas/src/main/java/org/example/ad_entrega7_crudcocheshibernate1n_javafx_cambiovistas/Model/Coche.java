@@ -1,14 +1,21 @@
 package org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity //indica que esta clase es una entidad mapeada a una tabla en la base de datos
 @Table(name = "coches") //especifica el nombre de la tabla en la base de datos
-public class Coche {
+public class Coche implements Serializable{
 
     //ATRIBUTOS
     @Id //indica que matricula es la clave primaria de la entidad
+    @GeneratedValue(strategy = IDENTITY) // es autoincrement --> genera un id
+    @Column(name="id")
+    private int id;
+
     @Column(name = "matricula")
     private String matricula;
     @Column(name = "marca")
@@ -36,6 +43,14 @@ public class Coche {
 
 
     //GETTER Y SETTER
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getMatricula() {
         return matricula;
     }
