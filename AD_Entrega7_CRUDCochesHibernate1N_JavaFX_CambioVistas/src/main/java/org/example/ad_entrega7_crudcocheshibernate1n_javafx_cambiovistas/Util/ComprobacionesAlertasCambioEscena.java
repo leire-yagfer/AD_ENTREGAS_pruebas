@@ -31,6 +31,14 @@ public class ComprobacionesAlertasCambioEscena {//método para las alertas que q
 
 
 
+    //método que valida el precio introducido (puede contener decimales, hasta 2)
+    // Método para validar que el precio sea un número, con o sin decimales
+    public static boolean esPrecioValido(String precio) {
+        return precio.matches("\\d+(\\.\\d{1,2})?");  // Acepta números con hasta 2 decimales
+    }//esPrecioValido
+
+
+
     //método que cambia de escena en el FXML
     public static void cambiarEscena(Button boton, String fxmlFile) {
         try {

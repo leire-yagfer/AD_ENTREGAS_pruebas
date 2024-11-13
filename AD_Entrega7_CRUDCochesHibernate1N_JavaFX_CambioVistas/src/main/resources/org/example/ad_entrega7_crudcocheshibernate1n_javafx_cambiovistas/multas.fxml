@@ -47,7 +47,7 @@
          </font>
       </TextField>
       <DatePicker fx:id="idFechaDatePicker" layoutX="391.0" layoutY="226.0" />
-      <TableView fx:id="tableViewMultas" layoutX="103.0" layoutY="359.0" onMouseClicked="#onElegirCocheClick" prefHeight="470.0" prefWidth="510.0">
+      <TableView fx:id="tableViewCoches" layoutX="103.0" layoutY="359.0" onMouseClicked="#onElegirCocheClick" prefHeight="470.0" prefWidth="510.0">
          <columns>
             <TableColumn fx:id="colIdMulta" prefWidth="170.0" text="ID MULTA" />
             <TableColumn fx:id="colPrecio" prefWidth="170.0" text="PRECIO" />
