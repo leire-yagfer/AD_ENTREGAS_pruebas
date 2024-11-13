@@ -22,7 +22,8 @@ public class Multa {
     @Column(name = "fecha")
     private LocalDate fecha;
 
-    //El atributo matricula no es necesario, ya que se gestiona a través de la relación ManyToOne
+    @Column(name = "matricula")
+    private String matricula;
 
 
     @ManyToOne // utilizo Mto1 porque un coche (one) puede tener varias multas (many)
@@ -47,6 +48,13 @@ public class Multa {
         this.fecha = fecha;
     }
 
+    public Multa(String matricula, String precio, LocalDate fecha) {
+        this.matricula = matricula;
+        this.precio = precio;
+        this.fecha = fecha;
+    }
+
+
     // GETTER Y SETTER
     public int getId_multa() {
         return id_multa;
@@ -70,6 +78,14 @@ public class Multa {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
     public Coche getCoche() {
