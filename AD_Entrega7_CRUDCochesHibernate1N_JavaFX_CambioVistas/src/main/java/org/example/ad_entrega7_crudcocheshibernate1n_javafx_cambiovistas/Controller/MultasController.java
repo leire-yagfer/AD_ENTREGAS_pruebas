@@ -161,6 +161,9 @@ public class MultasController implements Initializable {
         idMultaTF.clear();
         precioTF.clear();
         fechaDatePicker.setValue(null);
+
+        //si presiono sobre el boton de limpiar que se deseleccione la multa que estaba seleccionada porque si posteriormente le doy a borrar, por ejemplo, se me borra aunque no estés los datos puestos en los TF
+        tableViewMultas.getSelectionModel().clearSelection();
     }//onLimpiarClick
 
 

@@ -104,7 +104,7 @@ public class MainController implements Initializable {
             Coche cocheNuevo = new Coche(matricula, marca, modelo, tipo); //creo el coche con los datos de los campos
             if (cocheDAO.insertarCoche(cocheNuevo) > 0) {
                 actualizarTabla(); //llamo al método que actualiza la tabla después de haber realizado la inserción
-                limpiarCampos(); //limpio los campos
+                onLimpiarClick(event); //limpio los campos
             } else {
                 ComprobacionesAlertasCambioEscena.mostrarAlerta("No se ha podido agregar el coche. Inténtelo de nuevo.");
             }//if-else
@@ -150,7 +150,13 @@ public class MainController implements Initializable {
     //método que limpia todos los campos, ya que se cancela lo que se estuviese queriendo hacer
     @FXML
     void onLimpiarClick(ActionEvent event) {
-        limpiarCampos(); //llamo al método que elimina los datos de los campos
+        matriculaTF.clear();
+        marcaTF.clear();
+        modeloTF.clear();
+        tipoCB.getSelectionModel().clearSelection();
+
+        //si presiono sobre el boton de limpiar que se deseleccione el coche que estaba seleccionada porque si posteriormente le doy a borrar, por ejemplo, se me borra aunque no estés los datos puestos en los TF
+        tableViewCoches.getSelectionModel().clearSelection();
     }//onLimpiarClick
 
 
@@ -162,7 +168,7 @@ public class MainController implements Initializable {
         //verifico que hay un coche seleccionado y si el método eliminar coche devuelve un 1, que indica que se va a proceder a la eliminación del coche
         if (cocheSeleccionado != null && cocheDAO.eliminarCoche(cocheSeleccionado) > 0) {
             actualizarTabla(); //actualizo la tabla
-            limpiarCampos(); //limpio todos los campos
+            onLimpiarClick(event); //limpio todos los campos
         } else {
             ComprobacionesAlertasCambioEscena.mostrarAlerta("No se ha podido eliminar el coche.");
         }//if-else
@@ -229,13 +235,4 @@ public class MainController implements Initializable {
         cochesOL = FXCollections.observableArrayList(listarCoches); //convierto a ObservableList
         tableViewCoches.setItems(cochesOL); //actualizo el TableView con la nueva lista
     }//actualizarTabla
-
-
-    //método que limpia los campos de entrada
-    private void limpiarCampos() {
-        matriculaTF.clear();
-        marcaTF.clear();
-        modeloTF.clear();
-        tipoCB.getSelectionModel().clearSelection();
-    }//limpiarCampos
 }//classs
