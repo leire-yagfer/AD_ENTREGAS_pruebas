@@ -1,5 +1,6 @@
 package org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.DAO;
 
+import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Model.Coche;
 import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Model.Multa;
 import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Util.HibernateUtil;
 import org.hibernate.Session;
@@ -12,19 +13,19 @@ public class MultaDAOImpl implements MultaDAO {
 
     //método para obtener todas las multas almacenados en la base de datos
     @Override
-    public List<Multa> mostrarMultas() {
+    public List<Multa> mostrarMultasCocheSeleccionado(Coche cocheSeleccionado) {
         Transaction transaction = null; //inicializo la transacción
         List<Multa> multas = new ArrayList<>(); //inicializo la lista de multas
         try (Session session = HibernateUtil.getSession()) { //utilizo HibernateUtil para obtener la sesión
             transaction = session.beginTransaction();
-            multas = session.createQuery("from Multa", Multa.class).list(); //creo la consulta y obtengo la lista de multas
+            multas = session.createQuery("from Multa WHERE matricula = :matricula", Multa.class).setParameter("matricula", cocheSeleccionado.getMatricula()).list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback(); //si la transacción no es nula, hago rollback
             System.err.println("Error al mostrar multas: " + e.getMessage()); //imprimir mensaje de error
         }
         return multas; //devuelvo la lista de coches
-    }//mostrarMultas
+    }//mostrarMultasCocheSeleccionado
 
 
     //método para insertar una nueva multa en la base de datos
