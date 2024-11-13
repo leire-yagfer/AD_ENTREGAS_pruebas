@@ -18,6 +18,7 @@ import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Model.M
 import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Util.ComprobacionesAlertasCambioEscena;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -26,13 +27,7 @@ public class MultasController implements Initializable {
 
     //ATRIBUTOS
     @FXML
-    private Button actualizarBoton;
-
-    @FXML
     private Button atrasBoton;
-
-    @FXML
-    private Button borrarBoton;
 
     @FXML
     private TableColumn<?, ?> colFecha;
@@ -44,19 +39,13 @@ public class MultasController implements Initializable {
     private TableColumn<?, ?> colPrecio;
 
     @FXML
-    private DatePicker idFechaDatePicker;
+    private DatePicker fechaDatePicker;
 
     @FXML
     private TextField idMultaTF;
 
     @FXML
-    private TextField idPrecioTF;
-
-    @FXML
-    private Button insertarBoton;
-
-    @FXML
-    private Button limpiarBoton;
+    private TextField precioTF;
 
     @FXML
     private TextField matriculaTF;
@@ -82,25 +71,114 @@ public class MultasController implements Initializable {
     }//initialize
 
 
-    @FXML
-    void onActualizarClick(ActionEvent event) {
-
-    }
 
     @FXML
-    void onBorrarClick(ActionEvent event) {
+    void onElegirMultaClick(MouseEvent event) {
+        Multa multaSeleccionada = tableViewMultas.getSelectionModel().getSelectedItem(); //obtengo la multa seleccionada en el tableView y la guardo en la variable multaSeleccionada de tipo Multa
+        if (multaSeleccionada != null) { //si hay una multa seleccionada
+            //pongo los datos en los TextFields
+            idMultaTF.setText(String.valueOf(multaSeleccionada.getId_multa())); //cargo el id de la multa en el textField
+            precioTF.setText(String.valueOf(multaSeleccionada.getPrecio())); //cargo el precio de la multa en el textField
+            fechaDatePicker.setValue(multaSeleccionada.getFecha()); //cargo la fecha de la multa en el datePicker
+        }//if
+    }//onElegirCocheClick
 
-    }
 
-    @FXML
-    void onElegirCocheClick(MouseEvent event) {
-
-    }
 
     @FXML
     void onInsertarClick(ActionEvent event) {
+        String matricula = matriculaTF.getText();
+        String precio = precioTF.getText();
+        LocalDate fecha = fechaDatePicker.getValue();
 
-    }
+        if (precio.isEmpty() || fecha == null) {
+            ComprobacionesAlertasCambioEscena.mostrarAlerta("Error. Rellene todos los campos");
+            return;
+        } else if (!ComprobacionesAlertasCambioEscena.esPrecioValido(precio)) {
+            ComprobacionesAlertasCambioEscena.mostrarAlerta("Error. El precio introducido no es válido (separado por un '.' solo puede tener dos decimales).");
+            return;
+        } else {
+            Multa multa = new Multa(matricula, precio, fecha);
+            if (multasDAO.insertarMulta(multa) > 0) {
+                actualizarTabla(); //llamo al método que actualiza la tabla después de haber realizado la inserción
+                onLimpiarClick(event); //limpio los campos
+            } else {
+                ComprobacionesAlertasCambioEscena.mostrarAlerta("No se ha podido agregar el coche. Inténtelo de nuevo.");
+            }//if-else
+        }//if-elseif-else
+    } //onInsertarClick
+
+
+
+    @FXML
+    void onActualizarClick(ActionEvent event) {
+        Multa multaSeleccionada = tableViewMultas.getSelectionModel().getSelectedItem(); //obtengo la multa seleccionada en el tableView y la guardo en la variable multaSeleccionada de tipo Multa
+
+        //compruebo si hay alguna multa seleccionada
+        if (multaSeleccionada == null) {
+            ComprobacionesAlertasCambioEscena.mostrarAlerta("No se ha seleccionado ninguna multa.");
+            return; //si no hay multa seleccionada, salgo del método
+        }//if
+
+        String precio = precioTF.getText();
+        LocalDate fecha = fechaDatePicker.getValue();
+
+        //compruebo el precio
+        if (!ComprobacionesAlertasCambioEscena.esPrecioValido(precio)) {
+            ComprobacionesAlertasCambioEscena.mostrarAlerta("Debe introducir un precio valido.");
+            return;
+        } else{ //se ha introducido un precio válido
+            //actualizo los campos del coche seleccionado
+            multaSeleccionada.setPrecio(precio);
+            multaSeleccionada.setFecha(fecha);
+
+            //compruebo que se ha podido actualizar
+            if (multasDAO.actualizarMulta(multaSeleccionada) > 0) {
+                actualizarTabla(); //actualizo la tabla
+                onLimpiarClick(event); //limpio los campos
+            } else {
+                ComprobacionesAlertasCambioEscena.mostrarAlerta("Error al actualizar los datos de la multa.");
+            }//if-else
+        }//if-else
+    }//onActualizarClick
+
+
+
+    @FXML
+    void onBorrarClick(ActionEvent event) {
+        Multa multaSeleccionada = tableViewMultas.getSelectionModel().getSelectedItem(); //obtengo la multa seleccionada en el tableView y la guardo en la variable multaSeleccionada de tipo Multa
+
+        if (multaSeleccionada != null && multasDAO.eliminarMulta(multaSeleccionada) > 0) {
+            actualizarTabla(); //actualizo la tabla
+            onLimpiarClick(event); //limpio todos los campos
+        } else ComprobacionesAlertasCambioEscena.mostrarAlerta("Debe seleccionar una multa.");
+    }//onBorrarClick
+
+
+
+    @FXML
+    void onLimpiarClick(ActionEvent event) {
+        idMultaTF.clear();
+        precioTF.clear();
+        fechaDatePicker.setValue(null);
+    }//onLimpiarClick
+
+
+
+    @FXML
+    void onVoloverAtrasClick(ActionEvent event) {
+        ComprobacionesAlertasCambioEscena.cambiarEscena(atrasBoton, "main.fxml");
+    }//onVoloverAtrasClick
+
+
+
+    //método para actualizar la tabla después de realizar cambios
+    private void actualizarTabla() {
+        List<Multa> listarCoches = multasDAO.mostrarMultasCocheSeleccionado(cocheSelected); //obtengo la lista de multas del coche seleccionado
+        listadoMultas = FXCollections.observableArrayList(listarCoches); //convierto a ObservableList
+        tableViewMultas.setItems(listadoMultas); //actualizo el TableView con la nueva lista
+    }//actualizarTabla
+
 
 
     public void datosCocheMulta(Coche coche) {
@@ -112,15 +190,4 @@ public class MultasController implements Initializable {
         listadoMultas = FXCollections.observableArrayList(listaMultas);
         tableViewMultas.setItems(listadoMultas);
     }//datosCocheMulta
-
-
-    @FXML
-    void onLimpiarClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onVoloverAtrasClick(ActionEvent event) {
-        ComprobacionesAlertasCambioEscena.cambiarEscena(atrasBoton, "main.fxml");
-    }
 }//class
