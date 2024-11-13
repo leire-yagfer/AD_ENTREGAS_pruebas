@@ -2,6 +2,7 @@ package org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Contro
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -11,8 +12,13 @@ import javafx.scene.input.MouseEvent;
 import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Model.Coche;
 import org.example.ad_entrega7_crudcocheshibernate1n_javafx_cambiovistas.Util.ComprobacionesAlertasCambioEscena;
 
-public class MultasController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
+public class MultasController implements Initializable {
+
+
+    //ATRIBUTOS
     @FXML
     private Button actualizarBoton;
 
@@ -56,6 +62,13 @@ public class MultasController {
     Coche cocheSelected;
 
 
+    //MÉTODOS
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }//initialize
+
+
     @FXML
     void onActualizarClick(ActionEvent event) {
 
@@ -92,5 +105,4 @@ public class MultasController {
     void onVoloverAtrasClick(ActionEvent event) {
         ComprobacionesAlertasCambioEscena.cambiarEscena(atrasBoton, "main.fxml");
     }
-
 }//class
