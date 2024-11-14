@@ -17,7 +17,7 @@ public class Multa {
     private int id_multa;
 
     @Column(name = "precio")
-    private String precio;
+    private double precio;
 
     @Column(name = "fecha")
     private LocalDate fecha;
@@ -37,18 +37,18 @@ public class Multa {
     public Multa() {
     }
 
-    public Multa(String precio, LocalDate fecha, Coche coche) {
+    public Multa(double precio, LocalDate fecha, Coche coche) {
         this.precio = precio;
         this.fecha = fecha;
         this.coche = coche;
     }
 
-    public Multa(String precio, LocalDate fecha) {
+    public Multa(double precio, LocalDate fecha) {
         this.precio = precio;
         this.fecha = fecha;
     }
 
-    public Multa(String matricula, String precio, LocalDate fecha) {
+    public Multa(String matricula, double precio, LocalDate fecha) {
         this.matricula = matricula;
         this.precio = precio;
         this.fecha = fecha;
@@ -64,11 +64,11 @@ public class Multa {
         this.id_multa = id_multa;
     }
 
-    public String getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(String precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 

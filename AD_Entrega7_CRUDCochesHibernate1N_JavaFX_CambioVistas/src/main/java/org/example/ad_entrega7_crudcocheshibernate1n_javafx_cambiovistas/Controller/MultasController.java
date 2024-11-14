@@ -30,13 +30,13 @@ public class MultasController implements Initializable {
     private Button atrasBoton;
 
     @FXML
-    private TableColumn<?, ?> colFecha;
+    private TableColumn<Multa, LocalDate> colFecha;
 
     @FXML
-    private TableColumn<?, ?> colIdMulta;
+    private TableColumn<Multa, Integer> colIdMulta;
 
     @FXML
-    private TableColumn<?, ?> colPrecio;
+    private TableColumn<Multa, Double> colPrecio;
 
     @FXML
     private DatePicker fechaDatePicker;
@@ -88,16 +88,15 @@ public class MultasController implements Initializable {
     @FXML
     void onInsertarClick(ActionEvent event) {
         String matricula = matriculaTF.getText();
-        String precio = precioTF.getText();
+        String precioTexto = precioTF.getText(); //primero le cojo como texto para realizar las comprobaciones y luego le paso a double
         LocalDate fecha = fechaDatePicker.getValue();
 
-        if (precio.isEmpty() || fecha == null) {
+        if (precioTexto.isEmpty() || fecha == null) {
             ComprobacionesAlertasCambioEscena.mostrarAlerta("Error. Rellene todos los campos");
-            return;
-        } else if (!ComprobacionesAlertasCambioEscena.esPrecioValido(precio)) {
+        } else if (!ComprobacionesAlertasCambioEscena.esPrecioValido(precioTexto)) {
             ComprobacionesAlertasCambioEscena.mostrarAlerta("Error. El precio introducido no es válido (separado por un '.' solo puede tener dos decimales).");
-            return;
         } else {
+            double precio = Double.parseDouble(precioTexto); //convierto el precio a double
             Multa multa = new Multa(matricula, precio, fecha);
             if (multasDAO.insertarMulta(multa) > 0) {
                 actualizarTabla(); //llamo al método que actualiza la tabla después de haber realizado la inserción
@@ -106,7 +105,7 @@ public class MultasController implements Initializable {
                 ComprobacionesAlertasCambioEscena.mostrarAlerta("No se ha podido agregar el coche. Inténtelo de nuevo.");
             }//if-else
         }//if-elseif-else
-    } //onInsertarClick
+    }//onInsertarClick
 
 
 
@@ -120,15 +119,15 @@ public class MultasController implements Initializable {
             return; //si no hay multa seleccionada, salgo del método
         }//if
 
-        String precio = precioTF.getText();
+        String precioTexto = precioTF.getText(); //primero le cojo como texto para realizar las comprobaciones y luego le paso a double
         LocalDate fecha = fechaDatePicker.getValue();
 
         //compruebo el precio
-        if (!ComprobacionesAlertasCambioEscena.esPrecioValido(precio)) {
+        if (!ComprobacionesAlertasCambioEscena.esPrecioValido(precioTexto)) {
             ComprobacionesAlertasCambioEscena.mostrarAlerta("Debe introducir un precio valido.");
-            return;
-        } else{ //se ha introducido un precio válido
-            //actualizo los campos del coche seleccionado
+        } else { //se ha introducido un precio válido
+            double precio = Double.parseDouble(precioTexto); //convierto el precio a double
+            //actualizo los campos de la multa seleccionada
             multaSeleccionada.setPrecio(precio);
             multaSeleccionada.setFecha(fecha);
 
