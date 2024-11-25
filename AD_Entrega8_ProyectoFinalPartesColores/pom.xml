@@ -70,7 +70,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                org.example.ad_entrega8_proyectofinalpartescolores/org.example.ad_entrega8_proyectofinalpartescolores.HelloApplication
+                                org.example.ad_entrega8_proyectofinalpartescolores/org.example.ad_entrega8_proyectofinalpartescolores.App
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
