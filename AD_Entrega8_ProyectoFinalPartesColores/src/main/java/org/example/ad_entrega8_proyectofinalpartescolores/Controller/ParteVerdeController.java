@@ -50,10 +50,7 @@ public class ParteVerdeController implements Initializable {
     //MÉTODOS
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        fondoVerde.setStyle("-fx-background-color: #91e56f");
-        bt_parteVerde.setStyle("-fx-background-color: #1ec703");
-        bt_parteNaranja.setStyle("-fx-background-color: #fda22e");
-        bt_parteRojo.setStyle("-fx-background-color: #ee0606");
+
     }//initialize
 
 
@@ -62,8 +59,14 @@ public class ParteVerdeController implements Initializable {
         comprobacionesYcambioEscena.cambiarEscena(bt_parteNaranja, "parteNaranja.fxml");
     }//onParteNaranjaClick
 
+
     @FXML
     void onParteRojoClick(ActionEvent event) {
         comprobacionesYcambioEscena.cambiarEscena(bt_parteRojo, "parteRojo.fxml");
     }//onParteRojoClick
+
+
+    public void onCrearClick(){
+
+    }//onCrearClick
 }//class

@@ -47,10 +47,7 @@ public class ParteNaranjaController implements Initializable {
     //MÉTODOS
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        fondoNaranja.setStyle("-fx-background-color: #f6b34b");
-        bt_parteVerde.setStyle("-fx-background-color: #1ec703");
-        bt_parteNaranja.setStyle("-fx-background-color: #fda22e");
-        bt_parteRojo.setStyle("-fx-background-color: #ee0606");
+
     }//initialize
 
     @FXML

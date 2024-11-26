@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="fondoVerde" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ad_entrega8_proyectofinalpartescolores.Controller.ParteVerdeController">
+<AnchorPane fx:id="fondoVerde" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1220.0" style="-fx-background-color: #91e56f;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ad_entrega8_proyectofinalpartescolores.Controller.ParteVerdeController">
    <children>
       <Label layoutX="338.0" layoutY="42.0" text="PARTE VERDE DE ADVERTENCIA">
          <font>
@@ -34,9 +34,9 @@
       <Line endX="1220.0" layoutY="358.0" />
       <Line endX="1220.0" layoutX="1.0" layoutY="445.0" />
       <DatePicker fx:id="dp_fechaParte" layoutX="364.0" layoutY="386.0" prefHeight="39.0" prefWidth="282.0" promptText="dd//mm//aaaa" />
-      <Button fx:id="bt_parteVerde" layoutX="375.0" layoutY="112.0" mnemonicParsing="false" text="Parte verde" />
-      <Button fx:id="bt_parteNaranja" layoutX="546.0" layoutY="112.0" mnemonicParsing="false" onAction="#onParteNaranjaClick" text="Parte naranja" />
-      <Button fx:id="bt_parteRojo" layoutX="723.0" layoutY="112.0" mnemonicParsing="false" onAction="#onParteRojoClick" text="Parte rojo" />
+      <Button fx:id="bt_parteVerde" layoutX="375.0" layoutY="112.0" mnemonicParsing="false" style="-fx-background-color: #1ec703;" text="Parte verde" />
+      <Button fx:id="bt_parteNaranja" layoutX="546.0" layoutY="112.0" mnemonicParsing="false" onAction="#onParteNaranjaClick" style="-fx-background-color: #fda22e;" text="Parte naranja" />
+      <Button fx:id="bt_parteRojo" layoutX="723.0" layoutY="112.0" mnemonicParsing="false" onAction="#onParteRojoClick" style="-fx-background-color: #ee0606;" text="Parte rojo" />
       <Label layoutX="365.0" layoutY="297.0" prefHeight="39.0" prefWidth="282.0" />
    </children>
 </AnchorPane>
