@@ -5,89 +5,84 @@ import java.sql.Time;
 import java.time.LocalDate;
 
 import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "gestionpartes") //especifica el nombre de la tabla en la base de datos
+@Table(name = "partes_incidencia")
 public class ParteIncidencia {
 
-    //ATRIBUTOS
-    @Id // indica que id_multa es la clave primaria de la entidad
-    @GeneratedValue(strategy = IDENTITY) // es autoincrement --> genera un id
-    @Column(name="id_parte")
-    private int id_parte;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_parte")
+    private int idParte;
 
-    @Column(name="id_profesor")
-    private int id_profesor;
+    @ManyToOne
+    @JoinColumn(name = "id_alum")
+    private Alumnos alumno;
 
-    @Column(name="id_grupo")
-    private int id_grupo;
+    @ManyToOne
+    @JoinColumn(name = "id_grupo")
+    private Grupos grupo;
 
-    @Column(name="id_alum")
-    private int id_alum;
+    @ManyToOne
+    @JoinColumn(name = "id_profesor")
+    private Profesor profesor;
 
-    @Column(name="id_alum")
+    @ManyToOne
+    @JoinColumn(name = "id_punt_partes")
+    private PuntuacionPartes puntuacionParte;
+
+    @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(name="fecha")
+    @Column(name = "fecha")
     private LocalDate fecha;
 
-    @Column(name="hora")
-    private Time hora;
+    @Column(name = "hora")
+    private String hora;
 
-    @Column(name="sancion")
-    private int sancion;
+    @Column(name = "sancion")
+    private String sancion;
 
-    /*
-    @Column(name="id_punt_partes")
-    private int id_punt_partes;
-    */
-
-
-    //CONSTRUCTOR
-    public ParteIncidencia() {
+    public int getIdParte() {
+        return idParte;
     }
 
-    public ParteIncidencia(int id_alum, int id_grupo, int id_profesor, LocalDate fecha, Time hora, int sancion, String descripcion) {
-        this.id_alum = id_alum;
-        this.id_grupo = id_grupo;
-        this.id_profesor = id_profesor;
-        this.fecha = fecha;
-        this.hora = hora;
-        this.sancion = sancion;
-        this.descripcion = descripcion;
+    public void setIdParte(int idParte) {
+        this.idParte = idParte;
     }
 
-    //GETTER Y SETTER
-    public int getId_parte() {
-        return id_parte;
+    public Alumnos getAlumno() {
+        return alumno;
     }
 
-    public void setId_parte(int id_parte) {
-        this.id_parte = id_parte;
+    public void setAlumno(Alumnos alumno) {
+        this.alumno = alumno;
     }
 
-    public int getId_profesor() {
-        return id_profesor;
+    public Grupos getGrupo() {
+        return grupo;
     }
 
-    public void setId_profesor(int id_profesor) {
-        this.id_profesor = id_profesor;
+    public void setGrupo(Grupos grupo) {
+        this.grupo = grupo;
     }
 
-    public int getId_grupo() {
-        return id_grupo;
+    public Profesor getProfesor() {
+        return profesor;
     }
 
-    public void setId_grupo(int id_grupo) {
-        this.id_grupo = id_grupo;
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
     }
 
-    public int getId_alum() {
-        return id_alum;
+    public PuntuacionPartes getPuntuacionParte() {
+        return puntuacionParte;
     }
 
-    public void setId_alum(int id_alum) {
-        this.id_alum = id_alum;
+    public void setPuntuacionParte(PuntuacionPartes puntuacionParte) {
+        this.puntuacionParte = puntuacionParte;
     }
 
     public String getDescripcion() {
@@ -106,19 +101,19 @@ public class ParteIncidencia {
         this.fecha = fecha;
     }
 
-    public Time getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(Time hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 
-    public int getSancion() {
+    public String getSancion() {
         return sancion;
     }
 
-    public void setSancion(int sancion) {
+    public void setSancion(String sancion) {
         this.sancion = sancion;
     }
-}//class
+}
