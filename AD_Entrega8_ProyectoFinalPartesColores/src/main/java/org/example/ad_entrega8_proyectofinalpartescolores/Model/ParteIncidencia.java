@@ -1,12 +1,9 @@
 package org.example.ad_entrega8_proyectofinalpartescolores.Model;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
-import static javax.persistence.GenerationType.IDENTITY;
-import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "partes_incidencia")
@@ -40,10 +37,26 @@ public class ParteIncidencia {
     private LocalDate fecha;
 
     @Column(name = "hora")
-    private String hora;
+    private LocalTime hora;
 
     @Column(name = "sancion")
     private String sancion;
+
+
+    public ParteIncidencia() {
+    }
+
+    public ParteIncidencia(Alumnos alumno, Profesor profesor, Grupos grupo, LocalDate fecha, LocalTime hora, String descripcion, String sancion) {
+        this.alumno = alumno;
+        this.profesor = profesor;
+        this.grupo = grupo;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.descripcion = descripcion;
+        this.sancion = sancion;
+    }
+
+
 
     public int getIdParte() {
         return idParte;
@@ -101,11 +114,11 @@ public class ParteIncidencia {
         this.fecha = fecha;
     }
 
-    public String getHora() {
+    public LocalTime getHora() {
         return hora;
     }
 
-    public void setHora(String hora) {
+    public void setHora(LocalTime hora) {
         this.hora = hora;
     }
 

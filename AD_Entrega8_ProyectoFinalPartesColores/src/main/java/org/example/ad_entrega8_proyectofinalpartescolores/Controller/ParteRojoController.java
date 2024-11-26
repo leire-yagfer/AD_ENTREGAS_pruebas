@@ -1,21 +1,16 @@
 package org.example.ad_entrega8_proyectofinalpartescolores.Controller;
 
+import org.example.ad_entrega8_proyectofinalpartescolores.util.ComprobacionesYcambioEscena;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import org.example.ad_entrega8_proyectofinalpartescolores.util.comprobacionesYcambioEscena;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class ParteRojoController {
 
-public class ParteRojoController implements Initializable {
-
-    //ATRIBUTOS
     @FXML
     private Button bt_crear;
 
@@ -32,7 +27,7 @@ public class ParteRojoController implements Initializable {
     private DatePicker dp_fechaParte;
 
     @FXML
-    private AnchorPane fondoRojo;
+    private Label nombre_profesor;
 
     @FXML
     private TextArea txt_descripcion;
@@ -43,20 +38,13 @@ public class ParteRojoController implements Initializable {
     @FXML
     private TextField txt_nombreGrupo;
 
-
-    //MÉTODOS
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }//initialize
-
     @FXML
     void onParteNaranjaClick(ActionEvent event) {
-        comprobacionesYcambioEscena.cambiarEscena(bt_parteNaranja, "parteNaranja.fxml");
+        ComprobacionesYcambioEscena.cambiarEscena(bt_parteNaranja, "parteNaranja.fxml");
     }//onParteNaranjaClick
 
     @FXML
     void onParteVerdeClick(ActionEvent event) {
-        comprobacionesYcambioEscena.cambiarEscena(bt_parteRojo, "parteVerde.fxml");
+        ComprobacionesYcambioEscena.cambiarEscena(bt_parteRojo, "parteVerde.fxml");
     }//onParteVerdeClick
 }//class
