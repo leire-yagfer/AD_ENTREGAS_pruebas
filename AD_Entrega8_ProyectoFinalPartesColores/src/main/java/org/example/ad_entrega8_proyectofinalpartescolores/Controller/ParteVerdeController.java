@@ -47,7 +47,7 @@ public class ParteVerdeController implements Initializable{
     private TextField txt_expedienteAlumno;
 
     @FXML
-    private TextField txt_nombreGrupo;
+    private Label grupoAlumno;
 
     ParteIncidenciasDAO parteDAO = new ParteIncidenciasDAO();
 
@@ -86,7 +86,7 @@ public class ParteVerdeController implements Initializable{
     @FXML
     void onCrearParteVerdeClick(ActionEvent event) {
         String numExpedienteAlumno = txt_expedienteAlumno.getText();
-        String grupo = txt_nombreGrupo.getText();
+        //grupo
         String nombreProfesor = nombre_profesor.getText();
         LocalDate diaParte = dp_fechaParte.getValue();
         String horaParte = cb_horaParte.getSelectionModel().getSelectedItem();

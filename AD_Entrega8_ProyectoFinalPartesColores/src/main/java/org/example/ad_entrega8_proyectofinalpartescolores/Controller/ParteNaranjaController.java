@@ -42,7 +42,7 @@ public class ParteNaranjaController implements Initializable {
     private TextField txt_expedienteAlumno;
 
     @FXML
-    private TextField txt_nombreGrupo;
+    private Label grupoAlumno;
 
     ParteIncidenciasDAO parteDAO = new ParteIncidenciasDAO();
 
@@ -80,7 +80,7 @@ public class ParteNaranjaController implements Initializable {
     @FXML
     void onCrearParteNaranjaClick(ActionEvent event) {
         String numExpedienteAlumno = txt_expedienteAlumno.getText();
-        String grupo = txt_nombreGrupo.getText();
+        //grupo
         String nombreProfesor = nombre_profesor.getText();
         LocalDate diaParte = dp_fechaParte.getValue();
         //hora
