@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `gestionpartes`.`partes_incidencia` (
   `id_profesor` INT NULL DEFAULT NULL,
   `id_punt_partes` INT NULL DEFAULT NULL,
   `descripcion` VARCHAR(255) NULL DEFAULT NULL,
-  `fecha` VARCHAR(255) NULL DEFAULT NULL,
+  `fecha` DATE NULL DEFAULT NULL,
   `hora` VARCHAR(255) NULL DEFAULT NULL,
   `sancion` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`id_parte`),
