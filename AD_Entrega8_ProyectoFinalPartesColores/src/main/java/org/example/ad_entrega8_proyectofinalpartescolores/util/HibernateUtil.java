@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
-    static SessionFactory factory = null;
+    public static SessionFactory factory = null;
 
     static {
         try {

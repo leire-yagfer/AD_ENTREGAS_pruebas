@@ -37,7 +37,7 @@ public class ParteIncidencia {
     private LocalDate fecha;
 
     @Column(name = "hora")
-    private LocalTime hora;
+    private String hora;
 
     @Column(name = "sancion")
     private String sancion;
@@ -46,7 +46,7 @@ public class ParteIncidencia {
     public ParteIncidencia() {
     }
 
-    public ParteIncidencia(Alumnos alumno, Profesor profesor, Grupos grupo, LocalDate fecha, LocalTime hora, String descripcion, String sancion) {
+    public ParteIncidencia(Alumnos alumno, Profesor profesor, Grupos grupo, LocalDate fecha, String hora, String descripcion, String sancion) {
         this.alumno = alumno;
         this.profesor = profesor;
         this.grupo = grupo;
@@ -114,11 +114,11 @@ public class ParteIncidencia {
         this.fecha = fecha;
     }
 
-    public LocalTime getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(LocalTime hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 

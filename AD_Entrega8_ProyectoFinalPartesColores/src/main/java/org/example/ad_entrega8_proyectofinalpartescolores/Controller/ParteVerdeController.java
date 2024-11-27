@@ -2,6 +2,7 @@ package org.example.ad_entrega8_proyectofinalpartescolores.Controller;
 
 import javafx.scene.control.*;
 import org.example.ad_entrega8_proyectofinalpartescolores.DAO.ParteIncidenciasDAO;
+import org.example.ad_entrega8_proyectofinalpartescolores.Model.Alumnos;
 import org.example.ad_entrega8_proyectofinalpartescolores.Model.ParteIncidencia;
 import org.example.ad_entrega8_proyectofinalpartescolores.util.ComprobacionesYcambioEscena;
 import javafx.event.ActionEvent;
@@ -88,11 +89,11 @@ public class ParteVerdeController implements Initializable{
         String grupo = txt_nombreGrupo.getText();
         String nombreProfesor = nombre_profesor.getText();
         LocalDate diaParte = dp_fechaParte.getValue();
-        //hora
+        String horaParte = cb_horaParte.getSelectionModel().getSelectedItem();
         String descripcion = txt_descripcion.getText();
 
         //comprobar que todos los campos estan rellenos -> solo en los que se pueden introducir datos
-        if (numExpedienteAlumno.isEmpty() || diaParte == null || descripcion.isEmpty()){
+        if (numExpedienteAlumno.isEmpty() || diaParte == null || descripcion.isEmpty() || horaParte.isEmpty()){
             ComprobacionesYcambioEscena.mostrarAlerta(Alert.AlertType.ERROR, "Todos los campos deben estar rellenos.");
         } else { //si todos los campos están correctos -> creo el parte y lo introduzco en la BD
             ParteIncidencia parte = new ParteIncidencia();
