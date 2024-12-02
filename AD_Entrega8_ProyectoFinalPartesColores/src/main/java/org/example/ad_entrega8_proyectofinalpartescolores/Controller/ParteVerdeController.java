@@ -73,6 +73,28 @@ public class ParteVerdeController implements Initializable{
 
 
     @FXML
+    private void onExpedienteAlumnoChange() {
+        String numExpediente = txt_expedienteAlumno.getText();
+
+        if (!numExpediente.isEmpty()) {
+            // Buscar el alumno con el número de expediente
+            Alumnos alumno = parteDAO.buscarAlumnoPorExpediente(numExpediente);
+
+            if (alumno != null) {
+                // Si el alumno existe, mostrar el grupo en el Label
+                grupoAlumno.setText(alumno.getGrupo().getNombre_grupo());
+            } else {
+                // Si no se encuentra el alumno, mostrar un mensaje de error
+                grupoAlumno.setText("Alumno no encontrado.");
+            }
+        } else {
+            // Si el campo está vacío, limpiar el Label
+            grupoAlumno.setText("");
+        }
+    }
+
+
+    @FXML
     void onParteNaranjaClick(ActionEvent event) {
         ComprobacionesYcambioEscena.cambiarEscena(bt_parteNaranja, "parteNaranja.fxml");
     }//onParteNaranjaClick

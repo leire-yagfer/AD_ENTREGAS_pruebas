@@ -8,6 +8,7 @@ import org.example.ad_entrega8_proyectofinalpartescolores.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import static org.example.ad_entrega8_proyectofinalpartescolores.util.HibernateUtil.factory;
 
@@ -15,32 +16,27 @@ public class ParteIncidenciasDAO {
     SessionFactory factory = HibernateUtil.getSessionFactory();
 
 
-    /*
     //metodo para buscar un Alumno por expediente
-    public Alumnos buscarAlumnoPorExpediente(String numeroExpediente) {
-        Transaction transaction = null;
+    public Alumnos buscarAlumnoPorExpediente(String expediente) {
+        Session session = factory.openSession();  // Asegúrate de abrir la sesión
         Alumnos alumno = null;
-
-        try (Session session = factory.openSession()) {
-            transaction = session.beginTransaction();
-
-            String hql = "FROM Alumno a WHERE a.numeroExpediente = :numeroExpediente";
-            alumno = session.createQuery(hql, Alumnos.class)
-                    .setParameter("numeroExpediente", numeroExpediente)
-                    .uniqueResult();
-
-            transaction.commit();
+        try {
+            session.beginTransaction();  // Comienza la transacción
+            Query query = session.createQuery("FROM Alumnos WHERE numero_expediente = :numero_expediente");
+            query.setParameter("numero_expediente", expediente);
+            alumno = (Alumnos) query.uniqueResult();
+            session.getTransaction().commit();  // Comete la transacción
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();  // En caso de error, realiza rollback
             }
-            ComprobacionesYcambioEscena.mostrarAlerta(Alert.AlertType.ERROR, "Error al buscar el alumno.");
+            e.printStackTrace();
+        } finally {
+            session.close();  // Siempre cierra la sesión al final
         }
-
         return alumno;
-    }//buscarAlumnoPorExpediente
+    }
 
-     */
 
 
     //método para insertar un nuevo parte en la BD
