@@ -1,4 +1,4 @@
-package Entities;
+package com.example.ad_entrega9_apihoteljwt.Entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
