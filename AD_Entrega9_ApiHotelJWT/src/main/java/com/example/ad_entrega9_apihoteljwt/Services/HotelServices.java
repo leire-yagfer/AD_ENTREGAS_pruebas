@@ -2,9 +2,11 @@ package com.example.ad_entrega9_apihoteljwt.Services;
 
 import com.example.ad_entrega9_apihoteljwt.Entities.Hotel;
 import com.example.ad_entrega9_apihoteljwt.Repositories.HotelRepositories;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class HotelServices {
     private final HotelRepositories hotelRepositories;
 

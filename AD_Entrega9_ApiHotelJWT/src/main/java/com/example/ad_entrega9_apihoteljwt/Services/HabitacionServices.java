@@ -4,10 +4,12 @@ import com.example.ad_entrega9_apihoteljwt.Entities.Habitacion;
 import com.example.ad_entrega9_apihoteljwt.Entities.Hotel;
 import com.example.ad_entrega9_apihoteljwt.Repositories.HabitacionRepositories;
 import com.example.ad_entrega9_apihoteljwt.Repositories.HotelRepositories;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class HabitacionServices {
     private final HabitacionRepositories habitacionRepositories;
     private final HotelRepositories hotelRepositories;

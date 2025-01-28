@@ -3,9 +3,11 @@ package com.example.ad_entrega9_apihoteljwt.Repositories;
 import com.example.ad_entrega9_apihoteljwt.Entities.Habitacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface HabitacionRepositories extends JpaRepository<Habitacion, Integer> {
     //CONSULTAS
     //Búsqueda de habitaciones de un hotel por tamaño y precio (rango minimo→máximo). Solo mostrará aquellas habitaciones que estén marcadas como libres
