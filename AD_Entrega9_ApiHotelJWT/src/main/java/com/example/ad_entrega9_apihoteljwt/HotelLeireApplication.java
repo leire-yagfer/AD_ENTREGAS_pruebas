@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AdEntrega9ApiHotelJwtApplication {
+public class HotelLeireApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AdEntrega9ApiHotelJwtApplication.class, args);
+		SpringApplication.run(HotelLeireApplication.class, args);
 	}
 
 }

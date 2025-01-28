@@ -17,7 +17,7 @@ public class Habitacion {
     private int id_habitacion;
 
     @Column(name = "tamanio")
-    private int tamanio;
+    private float tamanio;
 
     @Column(name = "personas")
     private int personas;
@@ -60,11 +60,11 @@ public class Habitacion {
         this.id_habitacion = id_habitacion;
     }
 
-    public int getTamanio() {
+    public float getTamanio() {
         return tamanio;
     }
 
-    public void setTamanio(int tamanio) {
+    public void setTamanio(float tamanio) {
         this.tamanio = tamanio;
     }
 

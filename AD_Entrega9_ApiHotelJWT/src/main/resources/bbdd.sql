@@ -4,24 +4,24 @@ USE GestionHotelesApi;
 
 -- Tabla de hotel
 CREATE TABLE HOTEL (
-                         id_hotel INT AUTO_INCREMENT PRIMARY KEY,
-                         nombre VARCHAR(100) NOT NULL,
-                         descripcion TEXT,
-                         categoria INT NOT NULL,
-                         piscina BOOLEAN NOT NULL,
-                         localidad VARCHAR(100) NOT NULL
+                       id_hotel INT AUTO_INCREMENT PRIMARY KEY,
+                       nombre VARCHAR(100) NOT NULL,
+                       descripcion TEXT,
+                       categoria INT NOT NULL,
+                       piscina BOOLEAN NOT NULL,
+                       localidad VARCHAR(100) NOT NULL
 );
 
 -- Tabla de habitación
 CREATE TABLE HABITACION (
-                              id_habitacion INT AUTO_INCREMENT PRIMARY KEY,
-                              tamano FLOAT NOT NULL,
-                              capacidad BOOLEAN NOT NULL, --0 es 1 persona y 1 son 2 personas
-                              precio_noche DECIMAL(10, 2) NOT NULL,
-                              incluye_desayuno BOOLEAN NOT NULL,
-                              ocupada BOOLEAN NOT NULL,
-                              id_hotel INT NOT NULL,
-                                FOREIGN KEY (id_hotel) REFERENCES HOTEL(id_hotel) ON DELETE CASCADE
+                            id_habitacion INT AUTO_INCREMENT PRIMARY KEY,
+                            tamano FLOAT NOT NULL,
+                            capacidad BOOLEAN NOT NULL, -- 0 es 1 persona y 1 son 2 personas
+                            precio_noche DECIMAL(10, 2) NOT NULL,
+                            incluye_desayuno BOOLEAN NOT NULL,
+                            ocupada BOOLEAN NOT NULL,
+                            id_hotel INT NOT NULL,
+                            FOREIGN KEY (id_hotel) REFERENCES HOTEL(id_hotel) ON DELETE CASCADE
 );
 
 
