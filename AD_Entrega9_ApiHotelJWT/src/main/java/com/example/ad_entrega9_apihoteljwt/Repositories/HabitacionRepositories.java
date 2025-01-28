@@ -11,7 +11,7 @@ import java.util.List;
 public interface HabitacionRepositories extends JpaRepository<Habitacion, Integer> {
     //CONSULTAS
     //Búsqueda de habitaciones de un hotel por tamaño y precio (rango minimo→máximo). Solo mostrará aquellas habitaciones que estén marcadas como libres
-        @Query("SELECT h FROM Habitacion h WHERE h.hotel.id_hotel = :idHotel AND h.ocupada = false AND h.tamanio = :tamanio AND h.precio BETWEEN :precioMin AND :precioMax ORDER BY h.precio ASC")
+        @Query("SELECT h FROM Habitacion h WHERE h.hotel.id_hotel = :idHotel AND h.ocupada = false AND h.tamano = :tamanio AND h.precio_noche BETWEEN :precioMin AND :precioMax ORDER BY h.precio_noche ASC")
         List<Habitacion> findAvailableHabitaciones(int idhotel, float tamanio, double precioMin, double precioMax);
         /*
         1. h: Es un alias para la entidad Habitacion en la consulta JPQL.

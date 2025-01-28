@@ -19,7 +19,7 @@ public interface HotelRepositories extends JpaRepository<Hotel, Integer> { //Int
     */
 
     //Búsqueda de hotel por categoría
-    List<Hotel> findHotelByCategoria(String categoria);
+    List<Hotel> findHotelByCategoria(int categoria);
     //equivalente pero con consulta JPQL
     /*
     @Query("SELECT h FROM Hotel h WHERE h.categoria = :categoria")
