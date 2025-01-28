@@ -16,7 +16,7 @@ CREATE TABLE HOTEL (
 CREATE TABLE HABITACION (
                             id_habitacion INT AUTO_INCREMENT PRIMARY KEY,
                             tamano FLOAT NOT NULL,
-                            capacidad BOOLEAN NOT NULL, -- 0 es 1 persona y 1 son 2 personas
+                            personas BOOLEAN NOT NULL, -- 0 es 1 persona y 1 son 2 personas
                             precio_noche DECIMAL(10, 2) NOT NULL,
                             incluye_desayuno BOOLEAN NOT NULL,
                             ocupada BOOLEAN NOT NULL,
@@ -35,7 +35,7 @@ VALUES
     ('Hotel Montaña', 'Rústico y cómodo en las montañas', 4, FALSE, 'Granada');
 
 -- Insertar datos en la tabla HABITACION
-INSERT INTO HABITACION (tamano, capacidad, precio_noche, incluye_desayuno, ocupada, id_hotel)
+INSERT INTO HABITACION (tamano, personas, precio_noche, incluye_desayuno, ocupada, id_hotel)
 VALUES
     (20.5, TRUE, 120.00, TRUE, FALSE, 1), -- Habitación en Hotel Sol
     (15.0, FALSE, 90.00, FALSE, TRUE, 1), -- Habitación en Hotel Sol

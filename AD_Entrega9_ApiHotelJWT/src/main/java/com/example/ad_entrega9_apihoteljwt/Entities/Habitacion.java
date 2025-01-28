@@ -16,17 +16,17 @@ public class Habitacion {
     @Column(name="id_habitacion")
     private int id_habitacion;
 
-    @Column(name = "tamanio")
-    private float tamanio;
+    @Column(name = "tamano")
+    private float tamano;
 
     @Column(name = "personas")
     private int personas;
 
-    @Column(name = "precio")
-    private double precio;
+    @Column(name = "precio_noche")
+    private double precio_noche;
 
-    @Column(name = "desayuno")
-    private boolean desayuno;
+    @Column(name = "incluye_desayuno")
+    private boolean incluye_desayuno;
 
     @Column(name = "ocupada")
     private boolean ocupada;
@@ -42,16 +42,17 @@ public class Habitacion {
     public Habitacion() {
     }
 
-    public Habitacion(int tamanio, int personas, double precio, boolean desayuno, boolean ocupada) {
-        this.tamanio = tamanio;
+    public Habitacion(float tamano, int personas, double precio_noche, boolean incluye_desayuno, boolean ocupada) {
+        this.tamano = tamano;
         this.personas = personas;
-        this.precio = precio;
-        this.desayuno = desayuno;
+        this.precio_noche = precio_noche;
+        this.incluye_desayuno = incluye_desayuno;
         this.ocupada = ocupada;
     }
 
 
     //GETTER Y SETTER
+
     public int getId_habitacion() {
         return id_habitacion;
     }
@@ -60,12 +61,12 @@ public class Habitacion {
         this.id_habitacion = id_habitacion;
     }
 
-    public float getTamanio() {
-        return tamanio;
+    public float getTamano() {
+        return tamano;
     }
 
-    public void setTamanio(float tamanio) {
-        this.tamanio = tamanio;
+    public void setTamano(float tamano) {
+        this.tamano = tamano;
     }
 
     public int getPersonas() {
@@ -76,20 +77,20 @@ public class Habitacion {
         this.personas = personas;
     }
 
-    public double getPrecio() {
-        return precio;
+    public double getPrecio_noche() {
+        return precio_noche;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void setPrecio_noche(double precio_noche) {
+        this.precio_noche = precio_noche;
     }
 
-    public boolean isDesayuno() {
-        return desayuno;
+    public boolean isIncluye_desayuno() {
+        return incluye_desayuno;
     }
 
-    public void setDesayuno(boolean desayuno) {
-        this.desayuno = desayuno;
+    public void setIncluye_desayuno(boolean incluye_desayuno) {
+        this.incluye_desayuno = incluye_desayuno;
     }
 
     public boolean isOcupada() {

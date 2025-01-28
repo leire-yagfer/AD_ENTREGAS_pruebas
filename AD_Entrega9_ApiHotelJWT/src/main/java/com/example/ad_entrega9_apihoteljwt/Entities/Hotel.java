@@ -25,7 +25,7 @@ public class Hotel {
     private String descripcion;
 
     @Column(name = "categoria")
-    private String categoria;
+    private int categoria;
 
     @Column(name = "piscina")
     private boolean piscina;
@@ -33,7 +33,7 @@ public class Hotel {
     @Column(name = "localidad")
     private String localidad;
 
-    @OneToMany(mappedBy = "HOTEL", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL) //hotel -> el que ponga en el Many2One de Habitacion
     @JsonManagedReference
     private List<Habitacion> listaHabitaciones;
 
@@ -42,7 +42,7 @@ public class Hotel {
     public Hotel() {
     }
 
-    public Hotel(String nombre, String descripcion, String categoria, boolean piscina, String localidad, List<Habitacion> listaHabitaciones) {
+    public Hotel(String nombre, String descripcion, int categoria, boolean piscina, String localidad, List<Habitacion> listaHabitaciones) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;
@@ -77,11 +77,11 @@ public class Hotel {
         this.descripcion = descripcion;
     }
 
-    public String getCategoria() {
+    public int getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(int categoria) {
         this.categoria = categoria;
     }
 
