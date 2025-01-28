@@ -14,7 +14,6 @@ public class HabitacionServices {
     private final HabitacionRepositories habitacionRepositories;
     private final HotelRepositories hotelRepositories;
 
-
     //CONSTRUCTOR CREADO PQ SI NO DA ERROR
     public HabitacionServices(HabitacionRepositories habitacionRepositories, HotelRepositories hotelRepositories) {
         this.habitacionRepositories = habitacionRepositories;
@@ -24,9 +23,17 @@ public class HabitacionServices {
 
     //LLAMADA A MÉTODOS CREADOS EN LA INTERFACE DE REPOSITORIES
     //método que obtiene las habitaciones disponibles en orden ascendente del precio
-    public List<Habitacion> findHabitacionPorFiltros(int idhotel, float tamanio, double precioMin, double precioMax) {
-        return habitacionRepositories.findAvailableHabitaciones(idhotel, tamanio, precioMin, precioMax);
+    public List<Habitacion> findHabitacionPorFiltros(int id_hotel, float tamanio, double precioMin, double precioMax) {
+        //busco el hotel con el id proporcionado
+        Optional<Hotel> hotel = hotelRepositories.findById(id_hotel);
+        //si el hotel no existe, excepción
+        if (!hotel.isPresent()) {
+            throw new RuntimeException("El hotel con ID " + id_hotel + " no existe.");
+        }//if
+        //si el hotel existe, devuelvo las habitaciones disponibles
+        return habitacionRepositories.findAvailableHabitaciones(id_hotel, tamanio, precioMin, precioMax);
     }//findHabitacionPorFiltros
+
 
 
     //método que cambia de libre a ocupada, pero no al revés
@@ -52,6 +59,7 @@ public class HabitacionServices {
     }//actualizarEstadoHabitacion
 
 
+
     //método para crear una nueva habitación en un hotel
     public Habitacion registrarNuevaHabitacion(int idHotel, Habitacion nuevaHabitacion) {
         //busco el hotel en el que se va a crear loa habitación
@@ -72,6 +80,7 @@ public class HabitacionServices {
             throw new RuntimeException("Hotel con id " + idHotel + " no encontrado.");
         }//if-else
     }//registrarNuevaHabitacion
+
 
 
     //método para eliminar una habitación específica de un hotel

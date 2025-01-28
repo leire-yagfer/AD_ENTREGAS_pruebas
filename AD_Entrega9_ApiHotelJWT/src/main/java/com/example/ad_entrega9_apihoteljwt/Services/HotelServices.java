@@ -26,7 +26,7 @@ public class HotelServices {
 
 
     //Buscar hotel por categoría
-    public List<Hotel> findHotelByCategoria(String categoria) {
+    public List<Hotel> findHotelByCategoria(int categoria) {
         return hotelRepositories.findHotelByCategoria(categoria);
     }//findHotelByCategoria
 
