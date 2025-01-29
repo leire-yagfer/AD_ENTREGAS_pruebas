@@ -2,9 +2,9 @@ package com.example.ad_entrega9_apihoteljwt.Entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "HABITACION")
@@ -20,7 +20,7 @@ public class Habitacion {
     private float tamano;
 
     @Column(name = "personas")
-    private int personas;
+    private boolean personas;
 
     @Column(name = "precio_noche")
     private double precio_noche;
@@ -42,7 +42,7 @@ public class Habitacion {
     public Habitacion() {
     }
 
-    public Habitacion(float tamano, int personas, double precio_noche, boolean incluye_desayuno, boolean ocupada) {
+    public Habitacion(float tamano, boolean personas, double precio_noche, boolean incluye_desayuno, boolean ocupada) {
         this.tamano = tamano;
         this.personas = personas;
         this.precio_noche = precio_noche;
@@ -69,11 +69,11 @@ public class Habitacion {
         this.tamano = tamano;
     }
 
-    public int getPersonas() {
+    public boolean isPersonas() {
         return personas;
     }
 
-    public void setPersonas(int personas) {
+    public void setPersonas(boolean personas) {
         this.personas = personas;
     }
 

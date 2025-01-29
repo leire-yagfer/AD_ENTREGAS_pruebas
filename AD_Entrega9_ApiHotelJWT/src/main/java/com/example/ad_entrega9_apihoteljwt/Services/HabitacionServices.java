@@ -53,9 +53,11 @@ public class HabitacionServices {
                 //si la habitación ya está ocupada o si el parámetro es false, no se hace nada
                 throw new RuntimeException("La habitación ya está ocupada.");
             }//if-else
+        } else {
+            //si no se encuentra la habitación
+            throw new RuntimeException("Habitación con id " + idHabitacion + " no encontrada.");
         }
-        //si no se encuentra la habitación
-        throw new RuntimeException("Habitación con id " + idHabitacion + " no encontrada.");
+        return null;
     }//actualizarEstadoHabitacion
 
 
@@ -83,8 +85,9 @@ public class HabitacionServices {
 
 
 
+    //PROPIOS DE JPAREPOSITORY
     //método para eliminar una habitación específica de un hotel
-    public void eliminarHabitacionDeHotel(int idHabitacion) {
+    public void eliminarHabitacionDeHotel(int id_hotel, int idHabitacion) {
         //buso la habitación por su id
         Optional<Habitacion> optionalHabitacion = habitacionRepositories.findById(idHabitacion);
 
@@ -92,11 +95,10 @@ public class HabitacionServices {
         if (optionalHabitacion.isPresent()) {
             //la obtengo
             Habitacion habitacion = optionalHabitacion.get();
-            //verifico si la habitación está asociada a un hotel
+            //verifico si la habitación está asociada al id_hotel pasado por parametro
             Hotel hotel = habitacion.getHotel(); //obtengo el hotel al que pertenece esa habitación
-
             //si está asociada a un hotel
-            if (hotel != null) {
+            if (hotel != null && hotel.getId_hotel() == id_hotel) {
                 habitacionRepositories.delete(habitacion); //elimino la habitación
                 System.out.println("Habitación eliminada con éxito del hotel: " + hotel.getNombre());
             } else {
@@ -106,7 +108,4 @@ public class HabitacionServices {
             throw new RuntimeException("Habitación no encontrada.");
         }//if-else
     }//eliminarHabitacionDeHotel
-
-
-    //PROPIOS DE JPAREPOSITORY
 }

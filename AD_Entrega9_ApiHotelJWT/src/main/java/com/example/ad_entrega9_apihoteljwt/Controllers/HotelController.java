@@ -1,5 +1,7 @@
 package com.example.ad_entrega9_apihoteljwt.Controllers;
 
+import com.example.ad_entrega9_apihoteljwt.DTO.HabitacionDTO;
+import com.example.ad_entrega9_apihoteljwt.DTO.HotelDTO;
 import com.example.ad_entrega9_apihoteljwt.Entities.Habitacion;
 import com.example.ad_entrega9_apihoteljwt.Entities.Hotel;
 import com.example.ad_entrega9_apihoteljwt.Services.HabitacionServices;
@@ -53,24 +55,65 @@ public class HotelController {
     }//getAllHotelsPorLocalidad
 
 
-    /*
-    //Búsqueda de habitaciones de un hotel por tamaño y precio (rango minimo→máximo). Solo mostrará aquellas habitaciones que estén marcadas como libres
-    @GetMapping("/filtros/{id_hotel}")
-    public ResponseEntity<?> getAllHotelsPorTamanoYPrecio(@PathVariable int id_hotel,
-                                                          @RequestParam  int tamano,
-                                                          @RequestParam  double precioMin,
-                                                          @RequestParam  double precioMax) {
+
+
+    //método para crear un nuevo hotel
+    @PostMapping("/nuevoHotel")
+    public ResponseEntity<?> crearHotel(@RequestBody HotelDTO hoteldto) {
         try {
-            //obtener habitaciones del hotel con los filtros aplicados
-            List<Habitacion> habitacionesHotel = habitacionServices.findHabitacionPorFiltros(id_hotel, tamano, precioMin, precioMax);
-            if (habitacionesHotel.isEmpty()) {
-                return new ResponseEntity<>("No se han encontrado habitaciones.", HttpStatus.NO_CONTENT);
-            }
-            //devuelvo la lista con la shabitaciones encontradas
-            return ResponseEntity.ok(habitacionesHotel);
+            //creo un nuevo hotel de tipo hotel que le paso los datos sin las habitaciones
+            Hotel hotel = new Hotel();
+            //le paso los datos de hoteldto a hotel
+            hotel.setNombre(hoteldto.nombre());
+            hotel.setDescripcion(hoteldto.descripcion());
+            hotel.setCategoria(hoteldto.categoria());
+            hotel.setLocalidad(hoteldto.localidad());
+            hotel.setPiscina(hoteldto.piscina());
+
+            //creo el nuevo hotel
+            hotelServices.nuevoHotel(hotel);
+            return new ResponseEntity<>("Hotel creado con éxito",HttpStatus.CREATED);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error");
+            //si existe algún error, muestro mensaje
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>("Error al guardar el hotel.", HttpStatus.INTERNAL_SERVER_ERROR);
         }//try-catch
-    }//getAllHotelsPorLocalidad
-    */
+    }//crearHotel
+
+
+    //método para crear una nueva habitación de un hotel
+    @PostMapping("/nuevaHabitacion/{id_hotel}")
+    public ResponseEntity<?> nuevaHabitacionHotel(@PathVariable int id_hotel, @RequestBody HabitacionDTO habitaciondto) {
+        try {
+            //creo la habitacion, que no habitacionDTO
+            Habitacion habitacion = new Habitacion();
+            //le paso los parámetros de habitaciondto a habitacion
+            habitacion.setTamano(habitaciondto.tamano());
+            habitacion.setPersonas(habitaciondto.personas());
+            habitacion.setPrecio_noche(habitaciondto.precio_noche());
+            habitacion.setIncluye_desayuno(habitaciondto.incluye_desayuno());
+            habitacion.setOcupada(habitaciondto.ocupada());
+
+            //le paso el id y la habitacion
+            habitacionServices.registrarNuevaHabitacion(id_hotel, habitacion);
+            return new ResponseEntity<>("Habitación creada con éxito." ,HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>("Error al guardar el habitacion.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }//nuevaHabitacionHotel
+
+
+    //método para eliminar una habitación de hotel
+    @DeleteMapping("/eliminarHabitacionHotel/{id_hotel}/{id_habitacion}")
+    public ResponseEntity<?> eliminarHabitacionHotel(@PathVariable int id_hotel, @PathVariable int id_habitacion) {
+        try {
+            //llamo al metodo directamente
+            habitacionServices.eliminarHabitacionDeHotel(id_hotel, id_habitacion);
+            return new ResponseEntity<>("Habitación eliminada con éxito del hotel." ,HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>("Error al eliminar la habitacion.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }//try-catch
+    }//nuevaHabitacionHotel
 }//class

@@ -1,11 +1,11 @@
 package com.example.ad_entrega9_apihoteljwt.Entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.util.List;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
+import static javax.persistence.GenerationType.IDENTITY;
 
 
 @Entity
@@ -108,19 +108,4 @@ public class Hotel {
     public void setListaHabitaciones(List<Habitacion> listaHabitaciones) {
         this.listaHabitaciones = listaHabitaciones;
     }
-
-
-
-    //TOSTRING
-    @Override
-    public String toString() {
-        return "hotel{" +
-                "idHotel=" + id_hotel +
-                ", descripcion='" + descripcion + '\'' +
-                ", categoria='" + categoria + '\'' +
-                ", piscina=" + piscina +
-                ", localidad='" + localidad + '\'' +
-                ", listadoHabitaciones=" + listaHabitaciones +
-                '}';
-    }//toString
 }//class
