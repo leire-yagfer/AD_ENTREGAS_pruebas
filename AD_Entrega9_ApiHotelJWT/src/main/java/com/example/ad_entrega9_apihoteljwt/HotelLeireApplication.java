@@ -19,7 +19,20 @@ public class HotelLeireApplication {
 	@EnableWebSecurity
 	@Configuration
 	class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+		private static final String[] AUTH_WHITELIST = {
+				// -- Swagger UI v2
+				"/v2/api-docs",
+				"/swagger-resources",
+				"/swagger-resources/**",
+				"/configuration/ui",
+				"/configuration/security",
+				"/swagger-ui.html",
+				"/webjars/**",
+				// -- Swagger UI v3 (OpenAPI)
+				"/v3/api-docs/**",
+				"/swagger-ui/**",
+				"/doc/**"
+		};
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			http.csrf().disable()
@@ -34,6 +47,7 @@ public class HotelLeireApplication {
 
 					//cualquiera puede entrar a logearse a través de post
 					.antMatchers(HttpMethod.POST, "/user").permitAll()
+					.antMatchers(AUTH_WHITELIST).permitAll()
 					//.requestMatchers(HttpMethod.POST, "/user").permitAll()
 					.anyRequest().authenticated();//cualquier solicitud debe ser autenticada, de lo contrario, mi aplicación Spring devolverá una respuesta 401.
 		}

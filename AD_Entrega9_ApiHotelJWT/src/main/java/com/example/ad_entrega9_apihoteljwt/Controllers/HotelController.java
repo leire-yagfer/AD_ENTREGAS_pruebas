@@ -6,6 +6,7 @@ import com.example.ad_entrega9_apihoteljwt.Entities.Habitacion;
 import com.example.ad_entrega9_apihoteljwt.Entities.Hotel;
 import com.example.ad_entrega9_apihoteljwt.Services.HabitacionServices;
 import com.example.ad_entrega9_apihoteljwt.Services.HotelServices;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,7 @@ public class HotelController {
     //DOS FORMAS DISTINTAS DE DEVOLVER LOS DATOS (1  ES POR LOCALIDAD Y 2 POR CATEGORÍA)
     //Búsqueda de hotel por localidad
     @GetMapping("/localidad/{localidad}")
+    @Operation(summary = "Obtener todos los autos", description = "Obtiene una lista de todos los autos")
     public List<Hotel> getAllHotelsPorLocalidad(@PathVariable String localidad) {
         try {
             return hotelServices.findHotelByLocalidad(localidad);
