@@ -24,6 +24,11 @@ CREATE TABLE HABITACION (
                             FOREIGN KEY (id_hotel) REFERENCES HOTEL(id_hotel) ON DELETE CASCADE
 );
 
+CREATE TABLE USUARIO (
+                         username VARCHAR(100) PRIMARY KEY,
+                         pswd VARCHAR(100)
+);
+
 
 -- Insertar datos en la tabla HOTEL
 INSERT INTO HOTEL (nombre, descripcion, categoria, piscina, localidad)
@@ -42,3 +47,7 @@ VALUES
     (18.0, TRUE, 75.50, TRUE, TRUE, 2), -- Habitación en Hotel Luna
     (25.0, TRUE, 150.00, TRUE, FALSE, 3), -- Habitación en Hotel Estrella
     (30.0, FALSE, 200.00, TRUE, FALSE, 4); -- Habitación en Hotel Paraíso
+
+-- Insertar datos en la tabla USER
+INSERT INTO USUARIO (username, pswd) VALUES
+    ("juan", "juan");
