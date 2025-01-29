@@ -30,7 +30,7 @@ public class HotelController {
     //DOS FORMAS DISTINTAS DE DEVOLVER LOS DATOS (1  ES POR LOCALIDAD Y 2 POR CATEGORÍA)
     //Búsqueda de hotel por localidad
     @GetMapping("/localidad/{localidad}")
-    @Operation(summary = "Obtener todos los autos", description = "Obtiene una lista de todos los autos")
+    @Operation(summary = "Todos los hoteles por la localidad", description = "Lista de los hoteles en la localidad")
     public List<Hotel> getAllHotelsPorLocalidad(@PathVariable String localidad) {
         try {
             return hotelServices.findHotelByLocalidad(localidad);
@@ -42,6 +42,7 @@ public class HotelController {
 
     //Búsqueda de hotel por categoría
     @GetMapping("/categoria/{categoria}")
+    @Operation(summary = "Todos los hoteles por la categoría", description = "Lista de los hoteles en la categoría")
     public ResponseEntity<?> getAllHotelsPorCategoria(@PathVariable int categoria) {
         try {
             //obtener los hoteles por la categoría expuesta
@@ -61,6 +62,7 @@ public class HotelController {
 
     //método para crear un nuevo hotel
     @PostMapping("/nuevoHotel")
+    @Operation(summary = "Crear un nuevo hotel", description = "Crear un nuevo hotel")
     public ResponseEntity<?> crearHotel(@RequestBody HotelDTO hoteldto) {
         try {
             //creo un nuevo hotel de tipo hotel que le paso los datos sin las habitaciones
@@ -85,6 +87,7 @@ public class HotelController {
 
     //método para crear una nueva habitación de un hotel
     @PostMapping("/nuevaHabitacion/{id_hotel}")
+    @Operation(summary = "Crear una nueva habitación en un hotel concreto", description = "Crear una nueva habitación")
     public ResponseEntity<?> nuevaHabitacionHotel(@PathVariable int id_hotel, @RequestBody HabitacionDTO habitaciondto) {
         try {
             //creo la habitacion, que no habitacionDTO
@@ -108,6 +111,7 @@ public class HotelController {
 
     //método para eliminar una habitación de hotel
     @DeleteMapping("/eliminarHabitacionHotel/{id_hotel}/{id_habitacion}")
+    @Operation(summary = "Eliminar una habitación de un hotel", description = "Eliminar una habitación")
     public ResponseEntity<?> eliminarHabitacionHotel(@PathVariable int id_hotel, @PathVariable int id_habitacion) {
         try {
             //llamo al metodo directamente
